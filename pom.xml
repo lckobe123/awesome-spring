@@ -9,6 +9,8 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>spring-transaction</module>
+        <module>springcloud-eureka</module>
+        <module>concurrency-programing</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -141,6 +143,15 @@
                 <groupId>org.mybatis</groupId>
                 <artifactId>mybatis-spring</artifactId>
                 <version>${mybatis-spring.version}</version>
+            </dependency>
+
+            <!--管理所有spring cloud的包，就是有这种骚包的操作，多学习-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Dalston.SR2</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
