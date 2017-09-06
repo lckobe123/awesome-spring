@@ -7,8 +7,11 @@ TODO-LIST
 
 ## MODULES
     All modules description !
-    
-### spring-transaction
+   
+### |- spring-transaction
 
     Spring4的事务原理学习代码以及文档.
     
+### |- spring-shiro
+    
+    spring整合shiro以及shiro的基础知识库
