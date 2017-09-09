@@ -12,6 +12,8 @@
         <module>springcloud-eureka</module>
         <module>concurrency-programing</module>
         <module>spring-shiro</module>
+        <module>spring-persistence</module>
+        <module>commons-business-utils</module>
     </modules>
     <packaging>pom</packaging>
 
