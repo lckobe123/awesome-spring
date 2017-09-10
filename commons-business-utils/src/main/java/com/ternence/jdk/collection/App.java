@@ -1,4 +1,4 @@
-package com.ternence.spring.skills;
+package com.ternence.jdk.collection;
 
 /**
  * Hello world!

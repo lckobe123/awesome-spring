@@ -14,6 +14,7 @@
         <module>spring-shiro</module>
         <module>spring-persistence</module>
         <module>commons-business-utils</module>
+        <module>collection-framework</module>
     </modules>
     <packaging>pom</packaging>
 

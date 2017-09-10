@@ -11,6 +11,8 @@ import java.util.concurrent.Executors;
  * @version 1.0
  * @date 2017/9/6
  * @description 主方法测试线程
+ * <p>
+ * 留心 ' 指令重排' 的问题
  */
 public class MainApplication {
     /**
@@ -19,10 +21,11 @@ public class MainApplication {
      */
     public static void main(String[] args) {
         System.out.println("Press Crtl-C to exit program");
+        System.out.println("可用处理器数:" + Runtime.getRuntime().availableProcessors());
         ExecutorService service = Executors.newCachedThreadPool();
-        for (int i = 0; i < 100; i++) {
-            service.execute(new EvenChecker(new EvenGenerator(), i));
+        EvenGenerator generator = new EvenGenerator();
+        for (int i = 0; i < 80; i++) {
+            service.execute(new EvenChecker(generator, i));
         }
-        service.shutdown();
     }
 }

@@ -19,9 +19,8 @@ public class EvenChecker implements Runnable {
     public void run() {
         while (!generator.isCanceled()) {
             int val = generator.next();
-            System.out.println("val=" + val);
             if (val % 2 != 0) {
-                System.err.println(val + " not even");
+                System.err.println("id=" + id + ";" + val + " not even");
                 //优雅的结束线程
                 generator.cancel();
             }
