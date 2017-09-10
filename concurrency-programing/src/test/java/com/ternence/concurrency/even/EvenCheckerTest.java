@@ -18,7 +18,7 @@ public class EvenCheckerTest {
         System.out.println("Press Crtl-C to exit program");
         ExecutorService service = Executors.newCachedThreadPool();
         for (int i = 0; i < 100; i++) {
-            service.execute(new EvenChecker(new EvenGenerator(), i));
+            service.execute(new EvenChecker(new ThreadUnsafeEvenGenerator(), i));
         }
         service.shutdown();
     }

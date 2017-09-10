@@ -1,7 +1,9 @@
 package com.ternence.concurrency;
 
 import com.ternence.concurrency.even.EvenChecker;
-import com.ternence.concurrency.even.EvenGenerator;
+import com.ternence.concurrency.even.SynchronizedEvenGenerator;
+import com.ternence.concurrency.even.ThreadSafeEvenGenerator;
+import com.ternence.concurrency.even.ThreadUnsafeEvenGenerator;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -23,9 +25,14 @@ public class MainApplication {
         System.out.println("Press Crtl-C to exit program");
         System.out.println("可用处理器数:" + Runtime.getRuntime().availableProcessors());
         ExecutorService service = Executors.newCachedThreadPool();
-        EvenGenerator generator = new EvenGenerator();
+        //线程不安去的生成器
+        //ThreadUnsafeEvenGenerator unsafeGenerator = new ThreadUnsafeEvenGenerator();
+        //使用同步的生成器
+        //SynchronizedEvenGenerator synchronizedEvenGenerator = new SynchronizedEvenGenerator();
+        //使用ThreadLocal的生成器
+        ThreadSafeEvenGenerator safeGenerator = new ThreadSafeEvenGenerator();
         for (int i = 0; i < 80; i++) {
-            service.execute(new EvenChecker(generator, i));
+            service.execute(new EvenChecker(safeGenerator, i));
         }
     }
 }

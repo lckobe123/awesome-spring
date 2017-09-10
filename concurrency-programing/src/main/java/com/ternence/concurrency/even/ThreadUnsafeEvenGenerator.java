@@ -4,9 +4,9 @@ package com.ternence.concurrency.even;
  * @author 陶江航
  * @version 1.0
  * @date 2017/9/3
- * @description 产生偶数
+ * @description (线程不安全的偶数生成器)产生偶数
  */
-public class EvenGenerator extends IntGenerator {
+public class ThreadUnsafeEvenGenerator extends IntGenerator {
     private int currentEventValue = 2;
 
     @Override
