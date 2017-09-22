@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--TODO:这个文件可以用freemarker生成，方便开发环境和生产环境的动态配置-->
+<configuration
+        xmlns="http://ch.qos.logback/xml/ns/logback"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://ch.qos.logback/xml/ns/logback
+        http://ch.qos.logback/xml/ns/logback/logback.xsd"
+        debug="true">
+    <!--日志文件存放目录-->
+    <property name="LOG_HOME" value="D:/WorkFiles/IntelliJWorkspace/spring-skills/spring-pdf/logs"/>
+    <!--声明一个控制台appender-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH-mm-ss} [%thread] %-5level %-5logger %n%msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <!--文件日志-->
+    <appender name="FILE-APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志编码以及输出样式-->
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d[yyyy-MM-dd HH-mm-ss] [%thread] %-5level %-5logger %n%msg%n</pattern>
+        </encoder>
+        <!--追加的方式写日志文件-->
+        <append>true</append>
+        <!--保存日志内容的文件名称-->
+        <file>${LOG_HOME}\\debug.log</file>
+        <!--只能压缩单个文件-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <!--这里起名字在windows下面需要注意-->
+            <fileNamePattern>${LOG_HOME}\\debug.%i.log.zip</fileNamePattern>
+            <!--保存30天的历史日志-->
+            <maxHistory>30</maxHistory>
+            <!--每个日志文件的大小-->
+            <totalSizeCap>100GB</totalSizeCap>
+            <!--压缩包的索引开始值-->
+            <minIndex>1</minIndex>
+            <!--压缩包的索引最大值-->
+            <maxIndex>100</maxIndex>
+        </rollingPolicy>
+        <!--单个文件大小的触发器，一旦文件到达这个限制之后就会压缩成包-->
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>10MB</maxFileSize>
+        </triggeringPolicy>
+        <!--定义过滤级别（只能定义一个，并且其他的日志级别不接受）-->
+        <!--<filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            &lt;!&ndash;匹配LEVEL的不接受&ndash;&gt;
+            <onMatch>DENY</onMatch>
+            &lt;!&ndash;不匹配LEVEL的接受 即 保存到文件&ndash;&gt;
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>-->
+    </appender>
+
+    <!--日志写入数据库,比如elastic search数据库，或者redis，MySQL等等，方便做日志分析-->
+    <!--速度十分的慢-->
+    <!--<appender name="DB-APPENDER" class="ch.qos.logback.classic.db.DBAppender">
+        <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+            <driverClass>com.mysql.jdbc.Driver</driverClass>
+            <url>jdbc:mysql://192.168.70.128:3306/ftl?characterEncoding=utf8&amp;&amp;useSSL=false</url>
+            <user>root</user>
+            <password>xinzhendMySQLmms666++</password>
+        </connectionSource>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d[yyyy-MM-dd HH-mm-ss] [%thread] %-5level %-5logger %n%msg%n</pattern>
+        </encoder>
+    </appender>-->
+
+    <!--日志写入logstash-->
+    <!--<appender name="LOGSTASH-APPENDER" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d[yyyy-MM-dd HH-mm-ss] [%thread] %-5level %-5logger %n%msg%n</pattern>
+        </encoder>
+        &lt;!&ndash;这句话在xsd的验证写会出错，不过没关系，将就用吧&ndash;&gt;
+        <destination>192.168.70.128:9250</destination>
+    </appender>-->
+
+
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE-APPENDER"/>
+        <!--<appender-ref ref="DB-APPENDER"/>-->
+    </root>
+</configuration>
