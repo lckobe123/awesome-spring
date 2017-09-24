@@ -1,0 +1,16 @@
+package com.rules
+
+import com.ternence.spring.drools.domain.ProductDomain
+
+rule Offer4Diamond000000
+    when
+        productObject : ProductDomain(type == ProductDomain.DIAMOND)
+    then
+        productObject.setDiscount(15);
+    end
+rule Offer4Gold
+    when
+        productObject: ProductDomain(type == ProductDomain.GOLD)
+    then
+        productObject.setDiscount(25);
+    end

@@ -1,4 +1,4 @@
-package com.ternence.spring.skills;
+package com.ternence.spring.drools;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
