@@ -1,0 +1,15 @@
+[color]
+    ui = true
+[core]
+    editor = nano
+[merge]
+    tool = pc4merge
+[mergetool "pc4merge"]
+    cmd = "D:/ProgramFiles/Perforce/p4merge.exe"\
+	"$PWD/$REMOTE"\
+    "$PWD/$LOCAL"\
+	"$PWD/$BASE"\
+    "$PWD/$MERGED"
+[mergetool]
+	trustExitCode = true
+	keepBackup = false
