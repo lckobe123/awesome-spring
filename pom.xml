@@ -18,7 +18,6 @@
         <module>spring-pdf</module>
         <module>spring-pdf</module>
         <module>spring-test</module>
-        <module>drools-demo</module>
         <module>spring-security</module>
         <module>spring-activiti</module>
         <module>spring-drools</module>
