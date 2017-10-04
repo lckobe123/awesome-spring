@@ -1,10 +1,10 @@
-package com.ternence.spring.skills;
+package com.ternence.spring.drools;
 
 /**
  * Hello world!
  *
  */
-public class App 
+public class ActivitiApplication
 {
     public static void main( String[] args )
     {
