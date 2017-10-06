@@ -1,0 +1,13 @@
+package com.ternence.spring.drools.fact;
+dialect  "mvel"
+
+declare CustomType
+    customName:String
+    customAge:Integer
+end
+
+rule "type_declare"
+    when
+
+    then
+end

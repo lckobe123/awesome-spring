@@ -1,0 +1,13 @@
+package com.ternence.spring.drools.fact;
+
+dialect  "mvel"
+
+//定义一个名为person_rule的规则
+rule "person_rule"
+    when
+        //这里语法上的错误在运行时才会编译报错，挺操蛋的
+        Person(name == "Ternence")
+    then
+        System.out.println("Hello 陶江航,Welcome to use Drools to build an application!");
+end
+

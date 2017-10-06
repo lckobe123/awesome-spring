@@ -37,7 +37,7 @@
         <mybatis-spring.version>1.3.0</mybatis-spring.version>
         <shiro.version>1.2.4</shiro.version>
         <freemarker.version>2.3.23</freemarker.version>
-        <drools.version>6.5.0.Final</drools.version>
+        <drools.version>7.3.0.Final</drools.version>
     </properties>
 
     <dependencyManagement>

@@ -12,8 +12,8 @@
             <!--Console中这个配置不需要-->
             <!--logback使用的是TOMCAT启动时候默认使用的编码，也就是操作系统使用的编码GBK，
             所以强制编码会乱码的-->
-            <charset>GBK</charset>
-            <pattern>%d{yyyy-MM-dd HH-mm-ss} [%thread] %-5level %-5logger %n%msg%n</pattern>
+            <!--<charset>GBK</charset>-->
+            <pattern>%d{yyyy-MM-dd HH-mm-ss} [%thread] %-5level %-5logger:%line %n%msg%n</pattern>
         </encoder>
     </appender>
 
