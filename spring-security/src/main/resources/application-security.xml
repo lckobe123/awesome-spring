@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+    <description>配置spring security的文件</description>
+
+    <!--配置http请求相关的安全参数-->
+    <security:http auto-config="false" entry-point-ref="applicationAuthEntryPoint"
+                   authentication-manager-ref="authenticationManager">
+        <security:custom-filter ref="authenticationTokenFilter"/>
+    </security:http>
+
+    <!--作为处理用户登录Token的Filter-->
+    <bean id="authenticationTokenFilter" class="com.ternence.security.auth.AuthenticationTokenFilter">
+        <constructor-arg ref="userDetailsService"/>
+    </bean>
+
+    <!--认证管理器-->
+    <security:authentication-manager id="authenticationManager">
+        <security:authentication-provider user-service-ref="userDetailsService"/>
+    </security:authentication-manager>
+
+    <!--jdbc支持的认证管理器-->
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:jdbc-user-service data-source-ref="dataSource"/>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+
+    <!--提供用户信息的对象-->
+    <bean id="userDetailsService" class="com.ternence.security.service.ApplicationUserDetailsService"/>
+    <!--执行认证的类-->
+    <bean id="applicationAuthEntryPoint" class="com.ternence.security.auth.UnAuthEntryPoint"/>
+    <!--数据源-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="username" value="root"/>
+        <property name="password" value="tjhdMySQLmms666++"/>
+        <property name="driver" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://192.168.70.2:3306/test?useUnicode=true"/>
+    </bean>
+</beans>
