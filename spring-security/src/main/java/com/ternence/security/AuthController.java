@@ -1,10 +1,7 @@
 package com.ternence.security;
 
-import com.ternence.security.bean.UserBean;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * create by Ternence at 2017/10/14 18:40
@@ -18,11 +15,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AuthController {
 
 
-    @RequestMapping("/login")
-    @ResponseBody
-    public Object login(@RequestBody UserBean userBean) {
+    @RequestMapping("/index")
+    public String loginSuccess() {
         //执行登录认证
 
-        return null;
+        return "index";
+    }
+
+    @RequestMapping("/failure")
+    public String loginFailure() {
+
+        return "failure";
     }
 }
