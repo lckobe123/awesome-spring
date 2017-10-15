@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @description 认证相关的controller
  */
 @Controller
+@RequestMapping("/auth")
 public class AuthController {
 
 
