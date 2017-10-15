@@ -6,39 +6,47 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
     <description>配置spring security的文件</description>
 
+    <security:http pattern="/WEB-RES/css/**" security="none"/>
+    <security:http pattern="/WEB-RES/js/**" security="none"/>
+    <security:http pattern="/WEB-RES/images/**" security="none"/>
+    <security:http pattern="/login.html" security="none"/>
+    <security:http pattern="/favicon.ico" security="none"/>
+
+
+    <!--Web security services are configured using the <http> element.-->
     <!--配置http请求相关的安全参数-->
-    <security:http auto-config="false" entry-point-ref="applicationAuthEntryPoint"
+    <!--responsible crate FilterChainProxy -->
+    <security:http use-expressions="true" auto-config="false" entry-point-ref="authenticationEntryPoint"
                    authentication-manager-ref="authenticationManager">
-        <security:custom-filter ref="authenticationTokenFilter"/>
+        <!--指定表单登录时候如何重定向-->
+        <security:form-login authentication-success-forward-url="/auth/index"
+                             authentication-failure-forward-url="/auth/failure"/>
+        <!--Which says that we want all URLS in our application to be secured by spring security-->
+        <security:intercept-url pattern="/**" access="authenticated"/>
+        <!--启用登出功能-->
+        <security:logout invalidate-session="true" logout-url="/logout" logout-success-url="/index"/>
+        <!--禁用csrf-->
+        <security:csrf disabled="true"/>
     </security:http>
 
-    <!--作为处理用户登录Token的Filter-->
-    <bean id="authenticationTokenFilter" class="com.ternence.security.auth.AuthenticationTokenFilter">
-        <constructor-arg ref="userDetailsService"/>
-    </bean>
-
-    <!--认证管理器-->
+    <!--认证管理器,这个对象是必须要配置的，不然启动的时候会报错，找不到authenticationManager-->
     <security:authentication-manager id="authenticationManager">
-        <security:authentication-provider user-service-ref="userDetailsService"/>
+        <!--responsible create DaoAuthenticationProvider -->
+        <security:authentication-provider ref="authenticationProvider"/>
     </security:authentication-manager>
 
-    <!--jdbc支持的认证管理器-->
-    <security:authentication-manager>
-        <security:authentication-provider>
-            <security:jdbc-user-service data-source-ref="dataSource"/>
-        </security:authentication-provider>
-    </security:authentication-manager>
-
-
-    <!--提供用户信息的对象-->
-    <bean id="userDetailsService" class="com.ternence.security.service.ApplicationUserDetailsService"/>
-    <!--执行认证的类-->
-    <bean id="applicationAuthEntryPoint" class="com.ternence.security.auth.UnAuthEntryPoint"/>
-    <!--数据源-->
-    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
-        <property name="username" value="root"/>
-        <property name="password" value="tjhdMySQLmms666++"/>
-        <property name="driver" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://192.168.70.2:3306/test?useUnicode=true"/>
+    <!--用于从userDetailsService中获取用户信息-->
+    <bean id="authenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <property name="userDetailsService" ref="userDetailsService"/>
     </bean>
+
+    <!--指定登录页面-->
+    <bean id="authenticationEntryPoint"
+          class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+        <constructor-arg name="loginFormUrl" value="/login.html"/>
+    </bean>
+
+    <!--获取用户信息的service-->
+    <bean id="userDetailsService" class="com.ternence.security.service.ApplicationUserDetailsService"/>
+
 </beans>
