@@ -27,8 +27,8 @@ public class MyAuthorizationRealm extends AuthorizingRealm {
      * <p>
      * 之后使用hasRole isPermitted 等方法进行权限，角色的匹配，也就是真正的授权过程
      *
-     * @param principals
-     * @return
+     * @param principals 身份信息的集合
+     * @return 返回授权信息
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -36,6 +36,7 @@ public class MyAuthorizationRealm extends AuthorizingRealm {
         //查询授权信息，然后返回
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         /*给他一个创建的权限*/
+        //为什么这样写可以看Permission类的解析规则
         authorizationInfo.addStringPermission("user:create");
         /*给他一个role_a角色*/
         authorizationInfo.addRole("role_a");

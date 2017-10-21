@@ -21,6 +21,7 @@
         <module>spring-activiti</module>
         <module>spring-drools</module>
         <module>spring-fel</module>
+        <module>spring-shiro-cas-server</module>
     </modules>
     <packaging>pom</packaging>
 
