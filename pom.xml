@@ -3,27 +3,24 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <description>这是服务器上的提交</description>
     <groupId>com.ternence.spring.skills</groupId>
     <artifactId>spring-skills</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <modules>
         <module>spring-transaction</module>
         <module>springcloud-eureka</module>
-        <module>concurrency-programing</module>
         <module>spring-shiro</module>
         <module>spring-persistence</module>
-        <module>commons-business-utils</module>
-        <module>collection-framework</module>
         <module>spring-pdf</module>
         <module>spring-test</module>
         <module>spring-security</module>
         <module>spring-activiti</module>
         <module>spring-drools</module>
-        <module>spring-fel</module>
-        <module>spring-shiro-cas-server</module>
+        <module>spring-formula-engine</module>
+        <module>spring-jdk-concurrency</module>
+        <module>spring-shiro-cas/spring-shiro-cas-server</module>
     </modules>
-    <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -36,7 +33,7 @@
         <logback.version>1.2.3</logback.version>
         <mybatis.version>3.4.1</mybatis.version>
         <mybatis-spring.version>1.3.0</mybatis-spring.version>
-        <shiro.version>1.2.4</shiro.version>
+        <shiro.version>1.4.0</shiro.version>
         <freemarker.version>2.3.23</freemarker.version>
         <drools.version>7.3.0.Final</drools.version>
         <spring.security.version>4.2.3.RELEASE</spring.security.version>

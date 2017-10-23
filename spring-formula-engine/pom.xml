@@ -7,7 +7,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <description>Java表达式引擎fel/groovy/expression4j/java脚本引擎</description>
-    <artifactId>spring-fel</artifactId>
+    <artifactId>spring-formula-engine</artifactId>
     <packaging>jar</packaging>
 
     <name>spring-fel</name>

@@ -1,0 +1,3 @@
+# ModularRealmAuthenticator解释
+
+* ModularRealmAuthenticator的认证策略是什么
