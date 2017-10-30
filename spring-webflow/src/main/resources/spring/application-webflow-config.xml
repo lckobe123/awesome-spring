@@ -6,15 +6,18 @@
     <description>spring web flow的配置文件</description>
 
     <!--创建流程执行器,创建和执行流程,但是不负责加载流程定义-->
-    <flow:flow-executor id="flowExecutor" flow-registry="flowDefinitionRegistry">
-        <flow:flow-execution-attributes>
-
-        </flow:flow-execution-attributes>
-    </flow:flow-executor>
+    <!--驱动流程的执行-->
+    <flow:flow-executor id="flowExecutor" flow-registry="flowDefinitionRegistry"/>
 
     <!--配置流程注册表,相当于扫描流程定义文件,加载流程定义文件，让流程执行器能够运行他们，执行他们-->
     <flow:flow-registry id="flowDefinitionRegistry" base-path="classpath:spring/flows">
+        <!--使用这种方式就约定使用相对于base-path的路径引用流程定义文件-->
         <flow:flow-location-pattern value="*-flow.xml"/>
+        <!--使用这种方式就可以用id属性的值引用流程定义文件-->
+        <!--<flow:flow-location path="customer-flow.xml" id="customer"/>-->
     </flow:flow-registry>
+
+    <!--用于保存order的bean-->
+    <bean id="pizzaFlowActions" class="com.ternence.web.flow.bean.PizzaFlowActions"/>
 
 </beans>

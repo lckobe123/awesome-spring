@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+      http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd"
+      start-state="identifyCustomer">
+    <!--pizza订单的处理流程-->
+
+    <!--定义一个订单变量保存流程数据-->
+    <var name="order" class="com.ternence.web.flow.bean.Order"/>
+
+    <!--调用顾客子流程-->
+    <subflow-state id="identifyCustomer" subflow="customer-flow.xml">
+        <output name="customer" value="order.customer"/>
+        <!--指定下一步的转移方向,on表示出发转移的事件-->
+        <transition on="customerReady" to="buildOrder"/>
+    </subflow-state>
+
+    <!--调用构建订单子流程-->
+    <subflow-state id="buildOrder" subflow="build-order-flow.xml">
+        <input name="order" value="order"/>
+        <!--指定下一步的转移方向,on表示出发转移的事件-->
+        <transition on="orderCreated" to="takePayment"/>
+    </subflow-state>
+
+    <!--调用支付子流程-->
+    <subflow-state id="takePayment" subflow="take-payment-flow.xml">
+        <input name="order" value="order"/>
+        <!--指定下一步的转移方向,on表示出发转移的事件-->
+        <transition on="paymentTaken" to="saveOrder"/>
+    </subflow-state>
+
+    <!--调用保存订单子流程-->
+    <action-state id="saveOrder">
+        <!--前三个流程填充order对象,这里调用pizzaFlowActions bean的saveOrder方法保存order对象-->
+        <evaluate expression="pizzaFlowActions.saveOrder(order)"/>
+        <!--指定下一步的转移方向,on表示出发转移的事件-->
+        <transition on="paymentTaken" to="thankCustomer"/>
+    </action-state>
+
+    <!--调用感谢顾客视图-->
+    <view-state id="thankCustomer">
+        <transition to="endState"/>
+    </view-state>
+
+    <!--结束状态-->
+    <end-state id="endState"/>
+
+    <!--全局取消状态转移-->
+    <global-transitions>
+        <transition on="cancel" to="endState"/>
+    </global-transitions>
+</flow>
