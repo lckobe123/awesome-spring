@@ -1,7 +1,14 @@
 package com.ternence.security.realm;
 
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.apache.shiro.mgt.DefaultSecurityManager;
+import org.apache.shiro.realm.Realm;
+import org.apache.shiro.authc.AuthenticationToken;
 
 /**
  * @author 陶江航
@@ -10,6 +17,8 @@ import org.apache.shiro.realm.Realm;
  * @description 从数据库获取数据
  */
 public class DatabaseRealm implements Realm {
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
     @Override
     public String getName() {
 
@@ -21,19 +30,22 @@ public class DatabaseRealm implements Realm {
      *
      * @param token
      * @return
+     * @see ModularRealmAuthenticator#doSingleRealmAuthentication(org.apache.shiro.realm.Realm, org.apache.shiro.authc.AuthenticationToken)
      */
     @Override
     public boolean supports(AuthenticationToken token) {
-
+        logger.info("判断是否支持" + token.getClass() + "的校验");
         return token instanceof UsernamePasswordToken;
     }
 
     /**
      * 返回认证信息给shiro,以便于完成接下来的验证，如果没有返回数据则抛出异常
      *
-     * @param token
-     * @return
-     * @throws AuthenticationException
+     * @param token 用户传入的token
+     * @return 返回账户信息
+     * @throws AuthenticationException 认证发生异常，直接抛出异常,抛出的异常会被
+     *                                 {@link DefaultSecurityManager#login(Subject, AuthenticationToken)}方法拦截
+     * @see ModularRealmAuthenticator#doSingleRealmAuthentication(Realm, AuthenticationToken)
      */
     @SuppressWarnings("Duplicates")
     @Override
