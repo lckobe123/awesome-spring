@@ -11,7 +11,7 @@
     <title>customer</title>
 </head>
 <body>
-<h1>欢迎来到Customer页面</h1>
+<h1>开始构建订单</h1>
 <p></p>
 <a href="${flowExecutionUrl}&_eventId=next">下一步</a>
 </body>

@@ -13,11 +13,6 @@
 
     <mvc:default-servlet-handler/>
 
-   <!-- <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEN-INF/views/"/>
-        <property name="suffix" value=".html"/>
-    </bean>-->
-
     <bean id="flowViewResolver" class="org.springframework.webflow.mvc.builder.FlowResourceFlowViewResolver">
         <property name="defaultViewSuffix" value=".jsp"/>
     </bean>

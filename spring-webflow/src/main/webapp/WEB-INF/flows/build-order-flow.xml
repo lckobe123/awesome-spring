@@ -2,6 +2,20 @@
 <flow xmlns="http://www.springframework.org/schema/webflow"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.springframework.org/schema/webflow
-      http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd">
+      http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd"
+      start-state="build-order-1">
 
+    <!--这些文件最好放在WEB-IN下面-->
+    <!--view就是访问这个流程的时候返回的页面-->
+    <view-state id="build-order-1" view="../views/build-order.jsp">
+        <!--end-state id为customerReady，表示结束这个流程之后到orderCreated子流程-->
+        <transition on="next" to="build-order-2"/>
+    </view-state>
+
+    <view-state id="build-order-2" view="../views/build-order-completed.jsp">
+        <transition on="finished" to="orderCreated"/>
+    </view-state>
+
+    <!--结束状态-->
+    <end-state id="orderCreated"/>
 </flow>

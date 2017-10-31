@@ -2,15 +2,16 @@
 <flow xmlns="http://www.springframework.org/schema/webflow"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.springframework.org/schema/webflow
-      http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd"
-      start-state="identifyCustomer">
+      http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd">
     <!--pizza订单的处理流程-->
 
     <!--定义一个订单变量保存流程数据-->
+    <!--这个作用域始终都是flow的-->
     <var name="order" class="com.ternence.web.flow.bean.Order"/>
 
     <!--调用顾客子流程-->
-    <!--suppress WebflowModelInspection 这个是idea的bug，人家本来就要通过名字访问，idea却要求带上后缀-->
+    <!--suppress WebflowModelInspection 这个是idea的bug，
+    人家本来就要通过名字访问，idea却要求带上后缀-->
     <subflow-state id="identifyCustomer" subflow="customer-flow">
         <output name="customer" value="order.customer"/>
         <!--指定下一步的转移方向,on表示出发转移的事件-->
@@ -27,7 +28,8 @@
 
     <!--调用支付子流程-->
     <!--suppress WebflowModelInspection -->
-    <subflow-state id="takePayment" subflow="take-payment-flow">
+    <subflow-state id="takePayment" subflow="take-payme
+    nt-flow">
         <input name="order" value="order"/>
         <!--指定下一步的转移方向,on表示出发转移的事件-->
         <transition on="paymentTaken" to="saveOrder"/>
