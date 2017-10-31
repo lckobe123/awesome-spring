@@ -4,4 +4,8 @@
       xsi:schemaLocation="http://www.springframework.org/schema/webflow
       http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd">
 
+    <!--这些文件最好放在WEB-IN下面-->
+    <!--view就是访问这个流程的时候返回的页面-->
+    <view-state id="build-order-flow" view="../views/customer.jsp"/>
+
 </flow>

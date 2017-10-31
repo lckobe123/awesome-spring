@@ -10,21 +10,24 @@
     <var name="order" class="com.ternence.web.flow.bean.Order"/>
 
     <!--调用顾客子流程-->
-    <subflow-state id="identifyCustomer" subflow="customer-flow.xml">
+    <!--suppress WebflowModelInspection 这个是idea的bug，人家本来就要通过名字访问，idea却要求带上后缀-->
+    <subflow-state id="identifyCustomer" subflow="customer-flow">
         <output name="customer" value="order.customer"/>
         <!--指定下一步的转移方向,on表示出发转移的事件-->
         <transition on="customerReady" to="buildOrder"/>
     </subflow-state>
 
     <!--调用构建订单子流程-->
-    <subflow-state id="buildOrder" subflow="build-order-flow.xml">
+    <!--suppress WebflowModelInspection -->
+    <subflow-state id="buildOrder" subflow="build-order-flow">
         <input name="order" value="order"/>
         <!--指定下一步的转移方向,on表示出发转移的事件-->
         <transition on="orderCreated" to="takePayment"/>
     </subflow-state>
 
     <!--调用支付子流程-->
-    <subflow-state id="takePayment" subflow="take-payment-flow.xml">
+    <!--suppress WebflowModelInspection -->
+    <subflow-state id="takePayment" subflow="take-payment-flow">
         <input name="order" value="order"/>
         <!--指定下一步的转移方向,on表示出发转移的事件-->
         <transition on="paymentTaken" to="saveOrder"/>
