@@ -3,19 +3,71 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.springframework.org/schema/webflow
       http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd"
-      start-state="customer-1">
+      start-state="welcome">
+    <var name="customer" class="com.ternence.web.flow.bean.Customer"/>
 
     <!--这些文件最好放在WEB-IN下面-->
     <!--view就是访问这个流程的时候返回的页面-->
-    <view-state id="customer-1" view="../views/customer.jsp">
+    <view-state id="welcome" view="../views/welcome-customer.jsp">
         <!--end-state id为customerReady，表示结束这个流程之后到orderCreated子流程-->
-        <transition on="next" to="customer-2"/>
+        <transition on="phoneEntered" to="lookupCustomer"/>
     </view-state>
 
-    <view-state id="customer-2" view="../views/thank.jsp">
-        <transition on="finished" to="customerReady"/>
+    <action-state id="lookupCustomer">
+        <!--给出了行为状态要做的事情-->
+        <!--pizzaFlowActions是spring管理的一个bean-->
+        <!--requestParameters是webflow管理的请求参数的对象，从这么能够取出来参数-->
+        <evaluate expression="pizzaFlowActions.lookupCustomer(requestParameters.phoneNumber)"
+                  result="customer"/>
+
+        <!--evaluate发生异常的话就去注册页面-->
+        <transition on-exception="com.ternence.web.flow.ex.CustomerNotFoundException"
+                    to="registrationForm"/>
+
+        <!--默认情况下就结束子流程并触发当前子流程的customerReady事件到下一个子流程-->
+        <transition to="customerReady"/>
+    </action-state>
+
+    <view-state id="registrationForm" model="customer" view="../views/registration-form.jsp">
+        <!--在进入这个view的时候,利用evaluate这个表达式将请求参数中的手机号码设置给customer这个model
+        ,然后，model会被spring webflow传递给页面上的表单使用,可以使用EL表达式取出customer的值-->
+        <on-entry>
+            <evaluate expression="customer.phoneNumber=requestParameters.phoneNumber"/>
+        </on-entry>
+        <transition on="submit" to="checkDeliveryArea"/>
     </view-state>
+
+    <decision-state id="checkDeliveryArea">
+        <if test="pizzaFlowActions.checkDeliveryArea(customer.zipCode)"
+            then="addCustomer"
+            else="deliveryWarning"/>
+    </decision-state>
+
+    <!--配送区域警告页面-->
+    <view-state id="deliveryWarning" view="../views/delivery-warning.jsp">
+        <!--接受警告就添加顾客-->
+        <transition on="accept" to="addCustomer"/>
+        <!--不接受就触发全局取消事件-->
+        <transition on="cancel" to="cancel"/>
+    </view-state>
+
+    <action-state id="addCustomer">
+        <!--这里单纯的使用evaluate计算表达式,在表达式中做一些操作而已，没有返回值-->
+        <evaluate expression="pizzaFlowActions.addCustomer(customer)"/>
+        <transition to="customerReady"/>
+    </action-state>
 
     <!--结束状态-->
-    <end-state id="customerReady"/>
+    <end-state id="customerReady">
+        <!--相当于return语句,将这个对象返回作为这个流程的输出值,
+        赋值给order流程的order.customer对象-->
+        <output name="customer"/>
+    </end-state>
+
+    <end-state id="cancel"/>
+
+    <!--全局取消-->
+    <global-transitions>
+        <transition on="cancel" to="cancel"/>
+    </global-transitions>
 </flow>

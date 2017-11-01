@@ -2,6 +2,19 @@
 <flow xmlns="http://www.springframework.org/schema/webflow"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.springframework.org/schema/webflow
-      http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd">
+      http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd"
+      start-state="payment">
+    <input name="order" type="com.ternence.web.flow.bean.Order" required="true"/>
 
+    <view-state id="payment" view="../views/payment.jsp">
+        <transition on="payment" to="paymentTaken"/>
+    </view-state>
+
+    <end-state id="paymentTaken"/>
+
+    <end-state id="cancel"/>
+
+    <global-transitions>
+        <transition on="cancel" to="cancel"/>
+    </global-transitions>
 </flow>

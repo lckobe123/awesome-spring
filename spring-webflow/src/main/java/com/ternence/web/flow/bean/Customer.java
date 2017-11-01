@@ -10,4 +10,32 @@ import java.io.Serializable;
  * @description 顾客信息
  */
 public class Customer implements Serializable {
+    //电话号码
+    private String phoneNumber;
+    //区域码
+    private String zipCode;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "phoneNumber='" + phoneNumber + '\'' +
+                "zipCode='" + zipCode + '\'' +
+                '}';
+    }
 }
