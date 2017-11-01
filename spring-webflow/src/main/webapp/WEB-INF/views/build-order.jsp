@@ -11,8 +11,10 @@
     <title>customer</title>
 </head>
 <body>
-<h1>开始构建订单</h1>
-<p></p>
-<a href="${flowExecutionUrl}&_eventId=next">下一步</a>
+<h1>开始为用户${order.customer.phoneNumber}构建订单</h1>
+<p>${order}</p>
+<a href="${flowExecutionUrl}&_eventId=createPizza">制作pizza</a>
+<a href="${flowExecutionUrl}&_eventId=checkout">提交订单</a>
+<a href="${flowExecutionUrl}&_eventId=cancel">取消</a>
 </body>
 </html>

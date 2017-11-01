@@ -25,6 +25,12 @@ public class Order implements Serializable {
         return customer;
     }
 
+    public void addPizza(Pizza pizza) {
+        if (pizza == null)
+            throw new NullPointerException("不能添加一个空的pizza到订单中");
+        pizzas.add(pizza);
+    }
+
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
@@ -47,10 +53,10 @@ public class Order implements Serializable {
 
     @Override
     public String toString() {
-        return "Order{" +
-                "customer=" + customer +
-                ", pizzas=" + pizzas +
-                ", payment=" + payment +
+        return "Order{" + ",<br/>" +
+                "customer=" + customer + ",<br/>" +
+                "pizzas=" + pizzas + ",<br/>" +
+                "payment=" + payment + "<br/>" +
                 '}';
     }
 }

@@ -3,19 +3,45 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.springframework.org/schema/webflow
       http://www.springframework.org/schema/webflow/spring-webflow-2.4.xsd"
-      start-state="build-order-1">
+      start-state="showOrder">
+    <!--接受order对象作为输入参数-->
+    <input name="order" type="com.ternence.web.flow.bean.Order" required="true"/>
 
-    <!--这些文件最好放在WEB-IN下面-->
-    <!--view就是访问这个流程的时候返回的页面-->
-    <view-state id="build-order-1" view="../views/build-order.jsp">
-        <!--end-state id为customerReady，表示结束这个流程之后到orderCreated子流程-->
-        <transition on="next" to="build-order-2"/>
+    <!--view就是访问这个流程的时候返回的页面,这些文件最好放在WEB-IN下面-->
+    <view-state id="showOrder" view="../views/build-order.jsp" model="order">
+        <!--创建pizza订单-->
+        <transition on="createPizza" to="createPizza"/>
+        <!--提交pizza订单-->
+        <transition on="checkout" to="orderCreated"/>
+        <!--取消pizza订单-->
+        <transition on="cancel" to="cancel"/>
     </view-state>
 
-    <view-state id="build-order-2" view="../views/build-order-completed.jsp">
-        <transition on="finished" to="orderCreated"/>
+    <!--创建pizza的状态,这个页面有一个表单，需要为这个表单创建一个model-->
+    <view-state id="createPizza" view="../views/create-pizza.jsp"
+                model="flowScope.pizza">
+        <on-entry>
+            <!--set 也可以设置变量的值,与evaluate很相似-->
+            <set name="flowScope.pizza" value="new com.ternence.web.flow.bean.Pizza()"/>
+            <!--作为视图状态的入口,使用evaluate元素计算一个表达式,并将值放入toppingsList的变量中-->
+            <!--可以在真正的视图页面中使用这个变量-->
+            <evaluate result="viewScope.toppingsList"
+                      expression="T(com.ternence.web.flow.domain.Topping).asList()"/>
+        </on-entry>
+
+        <transition on="addPizza" to="showOrder">
+            <!--添加pizza到订单中-->
+            <evaluate expression="order.addPizza(flowScope.pizza)"/>
+        </transition>
     </view-state>
+
+    <end-state id="cancel"/>
 
     <!--结束状态-->
     <end-state id="orderCreated"/>
+
+    <!--全局取消转移（表示流程中所有状态都拥有这个转移）-->
+    <global-transitions>
+        <transition on="cancel" to="cancel"/>
+    </global-transitions>
 </flow>

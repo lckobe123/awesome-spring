@@ -11,7 +11,8 @@
     <title>感谢顾客</title>
 </head>
 <body>
-<h1>感谢顾客,结束流程</h1>
+<h1>感谢您的使用,请耐心等候pizza的送达,祝您用餐愉快</h1>
+
 <a href="${flowExecutionUrl}&_eventId=finished">结束</a>
 </body>
 </html>
