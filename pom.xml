@@ -21,6 +21,7 @@
         <module>spring-jdk-concurrency</module>
         <module>spring-shiro-cas/spring-shiro-cas-server</module>
         <module>spring-webflow</module>
+        <module>springboot-web</module>
     </modules>
 
     <properties>
@@ -272,13 +273,5 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <build>
-
-        <pluginManagement>
-
-        </pluginManagement>
-
-    </build>
 
 </project>
