@@ -22,6 +22,8 @@
         <module>spring-shiro-cas/spring-shiro-cas-server</module>
         <module>spring-webflow</module>
         <module>springboot-web</module>
+        <module>spring-webservice</module>
+        <module>rpc-framework/ternence-rpc</module>
     </modules>
 
     <properties>
