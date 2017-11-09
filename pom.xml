@@ -19,8 +19,11 @@
         <module>spring-drools</module>
         <module>spring-formula-engine</module>
         <module>spring-jdk-concurrency</module>
-        <module>spring-shiro-cas/spring-shiro-cas-server</module>
+        <module>spring-shiro-cas-server</module>
         <module>spring-webflow</module>
+        <module>springboot-web</module>
+        <module>spring-webservice</module>
+        <module>retrofit</module>
     </modules>
 
     <properties>
@@ -272,13 +275,5 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <build>
-
-        <pluginManagement>
-
-        </pluginManagement>
-
-    </build>
 
 </project>
