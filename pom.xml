@@ -23,7 +23,7 @@
         <module>spring-webflow</module>
         <module>springboot-web</module>
         <module>spring-webservice</module>
-        <module>ternence-rpc</module>
+        <module>retrofit</module>
     </modules>
 
     <properties>
