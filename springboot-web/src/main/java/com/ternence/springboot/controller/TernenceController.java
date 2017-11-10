@@ -1,7 +1,10 @@
 package com.ternence.springboot.controller;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * create by 陶江航 at 2017/11/8 20:37
@@ -10,12 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @email taojianghang@xinzhentech.com
  * @description 测试controller
  */
-@Controller
+@RestController
 public class TernenceController {
 
-    @RequestMapping("/test")
+    @Resource
+    private JdbcTemplate jdbcTemplate;
+
+    @RequestMapping("/")
     public Object test() {
 
-        return "this is a word";
+        return  jdbcTemplate.queryForList("SELECT * FROM user");
     }
 }
