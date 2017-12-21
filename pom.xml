@@ -27,6 +27,7 @@
         <module>annotation-utils</module>
         <module>zookeeper-demo</module>
         <module>spring-redis</module>
+        <module>spring-quartz</module>
     </modules>
 
     <properties>
@@ -141,6 +142,11 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>jcl-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jul-to-slf4j</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
             <dependency>
