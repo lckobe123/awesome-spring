@@ -24,6 +24,9 @@
         <module>springboot-web</module>
         <module>spring-webservice</module>
         <module>retrofit</module>
+        <module>annotation-utils</module>
+        <module>zookeeper-demo</module>
+        <module>spring-redis</module>
     </modules>
 
     <properties>
@@ -192,6 +195,12 @@
                         <artifactId>commons-logging</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-expression</artifactId>
+                <version>${springframework.version}</version>
             </dependency>
 
             <dependency>
