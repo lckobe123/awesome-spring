@@ -6,6 +6,7 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,7 +17,7 @@ import java.util.Date;
  * @author Ternence
  * @version 1.0
  */
-public class CronAutoInvestJob implements Job {
+public class CronAutoInvestJob implements Job, Serializable {
     private Logger logger = LoggerFactory.getLogger(CronAutoInvestJob.class);
 
     @Override

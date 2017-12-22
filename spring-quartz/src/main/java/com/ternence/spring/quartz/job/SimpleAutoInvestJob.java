@@ -6,13 +6,15 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
+
 /**
  * 实现一个自动投资的bean
  *
  * @author Ternence
  * @version 1.0
  */
-public class SimpleAutoInvestJob implements Job {
+public class SimpleAutoInvestJob implements Job, Serializable {
     private Logger logger = LoggerFactory.getLogger(SimpleAutoInvestJob.class);
 
     @Override
