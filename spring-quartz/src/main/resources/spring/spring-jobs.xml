@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <description>spring 整合 quartz 的配置文件</description>
+
+    <!--任务管理的方式一-->
+    <bean id="jobDetailFactoryBean" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="durability" value="true"/>
+        <property name="jobClass" value="com.ternence.spring.quartz.job.SpringStyleJob"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="wish" value="this is a wish"/>
+            </map>
+        </property>
+    </bean>
+
+    <!--任务管理的方式二,(这种方式 是不能序列化的)-->
+    <bean id="methodInvokingJobDetailFactoryBean"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <!-- 目标对象，指的是作业任务的实现类 -->
+        <property name="targetObject">
+            <bean class="com.ternence.spring.quartz.job.NoStyleJob"/>
+        </property>
+        <!-- 目标方法，指的是指定实现类中的哪个方法作为调度时的执行方法 -->
+        <property name="targetMethod" value="execute"/>
+        <!-- 是否并发 -->
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <!--不可序列化的调度器-->
+    <!--<bean id="nonSerializableSchedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="configLocation" value="classpath:quartz.properties"/>
+
+        <property name="applicationContextSchedulerContextKey" value="applicationContextKey"/>
+        &lt;!&ndash;项目启动之后5s钟开始执行任务&ndash;&gt;
+        <property name="startupDelay" value="5"/>
+        <property name="quartzProperties">
+            <props>
+                <prop key="org.quartz.scheduler.skipUpdateCheck">true</prop>
+            </props>
+        </property>
+        &lt;!&ndash;注册触发器&ndash;&gt;
+        <property name="triggers">
+            <list>
+                <ref bean="noStyleCronTrigger"/>
+            </list>
+        </property>
+
+        &lt;!&ndash;注册JobDetail,这个属性是非必须的&ndash;&gt;
+        <property name="jobDetails">
+            <array>
+                <ref bean="methodInvokingJobDetailFactoryBean"/>
+            </array>
+        </property>
+    </bean>-->
+
+
+    <!--可序列化的调度程序,将触发器-->
+    <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <!--持久化定时任务数据的data source-->
+        <property name="dataSource" ref="quartzDataSource"/>
+
+        <property name="applicationContextSchedulerContextKey" value="applicationContextKey"/>
+        <!--项目启动之后5s钟开始执行任务-->
+        <property name="startupDelay" value="5"/>
+
+        <property name="quartzProperties">
+            <props>
+                <prop key="org.quartz.scheduler.instanceId">AUTO</prop>
+                <!-- 线程池配置 -->
+                <prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop>
+                <prop key="org.quartz.threadPool.threadCount">20</prop>
+                <prop key="org.quartz.threadPool.threadPriority">5</prop>
+                <prop key="org.quartz.jobStore.misfireThreshold">120000</prop>
+                <prop key="org.quartz.scheduler.skipUpdateCheck">true</prop>
+                <!-- JobStore 配置 -->
+                <prop key="org.quartz.jobStore.class">org.quartz.impl.jdbcjobstore.JobStoreTX</prop>
+                <!-- 集群配置 -->
+                <prop key="org.quartz.jobStore.isClustered">true</prop>
+                <prop key="org.quartz.jobStore.clusterCheckinInterval">15000</prop>
+                <prop key="org.quartz.jobStore.maxMisfiresToHandleAtATime">1</prop>
+                <!-- 数据表设置 -->
+                <prop key="org.quartz.jobStore.tablePrefix">QRTZ_</prop>
+                <prop key="org.quartz.jobStore.dataSource">qzDS</prop>
+            </props>
+        </property>
+
+        <!--注册触发器-->
+        <property name="triggers">
+            <list>
+                <ref bean="cronTrigger"/>
+            </list>
+        </property>
+
+        <!--注册JobDetail,这个属性是非必须的-->
+        <property name="jobDetails">
+            <array>
+                <ref bean="jobDetailFactoryBean"/>
+            </array>
+        </property>
+    </bean>
+
+    <!--定义methodInvokingJobDetailFactoryBean 管理的这些Job的cron trigger触发器-->
+    <bean id="noStyleCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 这里的JobDetail指的就是我们配置的作业任务的bean -->
+        <property name="jobDetail" ref="methodInvokingJobDetailFactoryBean"/>
+        <!--触发任务的表达式-->
+        <property name="cronExpression" value="/15 * * * * ?"/>
+    </bean>
+
+    <!--定义jobDetailFactoryBean 管理的Job的cron trigger触发器-->
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <!-- 这里的JobDetail指的就是我们配置的作业任务的bean -->
+        <property name="jobDetail" ref="jobDetailFactoryBean"/>
+        <!--触发任务的表达式-->
+        <property name="cronExpression" value="/15 * * * * ?"/>
+    </bean>
+</beans>
