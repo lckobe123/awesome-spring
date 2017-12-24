@@ -9,7 +9,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>spring-transaction</module>
-        <module>springcloud-eureka</module>
         <module>spring-shiro</module>
         <module>spring-persistence</module>
         <module>spring-pdf</module>
@@ -21,13 +20,12 @@
         <module>spring-jdk-concurrency</module>
         <module>spring-shiro-cas-server</module>
         <module>spring-webflow</module>
-        <module>springboot-web</module>
         <module>spring-webservice</module>
         <module>retrofit</module>
         <module>annotation-utils</module>
-        <module>zookeeper-demo</module>
         <module>spring-redis</module>
         <module>spring-quartz</module>
+        <module>spring-rabbitmq</module>
     </modules>
 
     <properties>
@@ -46,10 +44,23 @@
         <drools.version>7.3.0.Final</drools.version>
         <spring.security.version>4.2.3.RELEASE</spring.security.version>
         <spring.webflow.version>2.4.4.RELEASE</spring.webflow.version>
+        <amqp-client.version>5.1.1</amqp-client.version>
+        <spring-rabbit>1.6.0.RELEASE</spring-rabbit>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!--rabbitmq-->
+            <dependency>
+                <groupId>org.springframework.amqp</groupId>
+                <artifactId>spring-rabbit</artifactId>
+                <version>${spring-rabbit}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.rabbitmq</groupId>
+                <artifactId>amqp-client</artifactId>
+                <version>${amqp-client.version}</version>
+            </dependency>
             <!--安全相关-->
             <dependency>
                 <groupId>org.springframework.security</groupId>

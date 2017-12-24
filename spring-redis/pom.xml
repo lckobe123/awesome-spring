@@ -34,18 +34,21 @@
             <artifactId>spring-beans</artifactId>
         </dependency>
 
+        <!--操作方式一-->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
             <version>2.0.1.RELEASE</version>
         </dependency>
 
+        <!--操作方式二-->
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson</artifactId>
             <version>3.5.5</version>
         </dependency>
 
+        <!--操作方式三-->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
