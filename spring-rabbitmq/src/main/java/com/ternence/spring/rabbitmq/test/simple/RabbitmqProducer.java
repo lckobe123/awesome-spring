@@ -1,4 +1,4 @@
-package com.ternence.spring.rabbitmq.test;
+package com.ternence.spring.rabbitmq.test.simple;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;

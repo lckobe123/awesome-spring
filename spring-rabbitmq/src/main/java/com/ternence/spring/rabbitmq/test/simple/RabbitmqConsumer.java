@@ -1,15 +1,13 @@
-package com.ternence.spring.rabbitmq.test;
+package com.ternence.spring.rabbitmq.test.simple;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.Consumer;
 import com.rabbitmq.client.QueueingConsumer;
 import com.ternence.spring.rabbitmq.utils.ConnectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * R
