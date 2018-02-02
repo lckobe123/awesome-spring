@@ -27,3 +27,4 @@ target/
 rebel.xml
 
 *.debug
+node_modules/
