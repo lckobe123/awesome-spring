@@ -26,6 +26,7 @@
         <module>spring-redis</module>
         <module>spring-quartz</module>
         <module>spring-rabbitmq</module>
+        <module>seckill</module>
     </modules>
 
     <properties>
