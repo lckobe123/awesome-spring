@@ -10,7 +10,6 @@
     <modules>
         <module>spring-transaction</module>
         <module>spring-shiro</module>
-        <module>spring-persistence</module>
         <module>spring-pdf</module>
         <module>spring-test</module>
         <module>spring-security</module>
