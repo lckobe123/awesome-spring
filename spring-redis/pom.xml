@@ -42,10 +42,11 @@
         </dependency>
 
         <!--操作方式二-->
+        <!-- redisson redis分布式事务锁 -->
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson</artifactId>
-            <version>3.5.5</version>
+            <version>2.2.21</version>
         </dependency>
 
         <!--操作方式三-->
