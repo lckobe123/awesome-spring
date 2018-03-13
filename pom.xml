@@ -27,6 +27,7 @@
         <module>spring-quartz</module>
         <module>spring-rabbitmq</module>
         <module>seckill</module>
+        <module>spring-mybatis</module>
     </modules>
 
     <properties>
