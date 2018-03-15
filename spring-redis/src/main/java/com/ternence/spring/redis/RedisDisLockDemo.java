@@ -21,7 +21,18 @@ public class RedisDisLockDemo {
 
     public static void main(String[] args) {
         RedisDisLockDemo redisDisLockDemo = new RedisDisLockDemo();
-        redisDisLockDemo.testCommonLock();
+        redisDisLockDemo.testBondLock();
+    }
+
+
+    @SuppressWarnings("Duplicates")
+    private void testBondLock() {
+        Config config = new Config();
+        config.useSingleServer().setPassword("ePgBckhguJTk2KyaoFYH").setDatabase(1).setAddress(SERVER_ADDRESS);
+        RedissonClient client = Redisson.create(config);
+        RLock rLock = client.getLock("lock:bond:f48e445979854342906da9874b529df6");
+        rLock.lock();//上一个带有超时特性的锁,
+        System.out.println("获取到锁：" + rLock.isLocked());
     }
 
 
