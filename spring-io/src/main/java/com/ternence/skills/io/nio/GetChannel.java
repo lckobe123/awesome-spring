@@ -1,4 +1,4 @@
-package com.ternence.skills.netty.nio;
+package com.ternence.skills.io.nio;
 
 import java.io.*;
 import java.nio.ByteBuffer;

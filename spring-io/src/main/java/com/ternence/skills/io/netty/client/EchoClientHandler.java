@@ -1,4 +1,4 @@
-package com.ternence.skills.netty.client;
+package com.ternence.skills.io.netty.client;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;

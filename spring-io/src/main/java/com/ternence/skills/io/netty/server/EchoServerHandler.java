@@ -1,4 +1,4 @@
-package com.ternence.skills.netty;
+package com.ternence.skills.io.netty.server;
 
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;

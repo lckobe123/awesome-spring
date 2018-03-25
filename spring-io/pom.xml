@@ -6,10 +6,10 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>spring-netty</artifactId>
+    <artifactId>spring-io</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>spring-netty Maven Webapp</name>
+    <name>spring-io Maven Webapp</name>
     <url>http://maven.apache.org</url>
 
 
@@ -22,18 +22,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!--这是netty目前维护的主要版本，5.0几乎没什么变化-->
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
             <version>4.1.22.Final</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
-        <!--<dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-            <version>5.0.0.Alpha2</version>
-        </dependency>-->
     </dependencies>
 
     <build>

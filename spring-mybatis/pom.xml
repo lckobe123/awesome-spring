@@ -9,8 +9,7 @@
 
     <artifactId>spring-mybatis</artifactId>
     <packaging>jar</packaging>
-
-    <name>spring-mybatis</name>
+    <name>spring-mybatis </name>
     <url>http://maven.apache.org</url>
 
     <properties>
