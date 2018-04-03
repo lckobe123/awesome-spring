@@ -10,8 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 /**
- * R
- * abbitmq的消费者
+ * Rabbitmq的消费者
  *
  * @author Ternence
  * @version 1.0

@@ -28,6 +28,7 @@
         <module>seckill</module>
         <module>spring-mybatis</module>
         <module>spring-io</module>
+        <module>spring-feign</module>
     </modules>
 
     <properties>
