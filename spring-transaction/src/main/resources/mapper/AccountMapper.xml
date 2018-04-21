@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ternence.transaction.web.mapper.AccountMapper">
+
+    <!--原有的金额减去转出的金额-->
+    <update id="out">
+        UPDATE test.account
+        SET balance = balance - #{money}
+        WHERE `name` = #{accountName}
+    </update>
+
+    <!--原有的金额加上转入的金额-->
+    <update id="in">
+        UPDATE test.account
+        SET balance = balance + #{money}
+        WHERE `name` = #{accountName}
+    </update>
+</mapper>

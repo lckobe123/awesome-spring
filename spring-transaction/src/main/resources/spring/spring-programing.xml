@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <!--配置Spring的事务,mybatis-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="username" value="${jdbc.user}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="password" value="${jdbc.password}"/>
+
+        <property name="initialSize" value="3"/>
+        <!--最大可以同时活跃是个连接-->
+        <property name="maxActive" value="10"/>
+        <!--最小闲置的连接数为1-->
+        <property name="minIdle" value="1"/>
+    </bean>
+
+    <!--配置mybatis-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!--mybatis配置文件路径-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!--mapper文件路径-->
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--指定搜索mapper接口接口的包,必须配置的属性-->
+        <property name="basePackage" value="com.ternence.transaction.web.mapper"/>
+
+        <!--扫描指定的注解-->
+        <property name="annotationClass" value="org.apache.ibatis.annotations.Mapper"/>
+
+        <!--有多个数据源的时候可以用这个属性指定使用哪个数据源-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--这里仅仅是配置一个事务管理器而已,并没有任何事务-->
+    <!--suppress XmlDefaultAttributeValue -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!--编程式事务模板-->
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionManager"/>
+
+        <property name="readOnly" value="false"/>
+
+        <!--ISOLATION_REPEATABLE_READ-->
+        <property name="isolationLevel" value="4"/>
+
+        <!--REQUIRED-->
+        <property name="propagationBehavior" value="0"/>
+    </bean>
+</beans>

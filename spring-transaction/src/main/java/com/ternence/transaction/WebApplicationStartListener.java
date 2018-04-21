@@ -7,10 +7,11 @@ import org.springframework.web.context.ContextLoaderListener;
 import javax.servlet.ServletContextEvent;
 
 /**
+ * 在Spring容器启动的时候接受一下事件
+ *
  * @author 陶江航
  * @version 1.0
- * @date 2017/9/3
- * @description 在Spring容器启动的时候接受一下事件
+ * @since 2017/9/3
  */
 public class WebApplicationStartListener extends ContextLoaderListener {
     private Logger logger = LoggerFactory.getLogger(getClass());
