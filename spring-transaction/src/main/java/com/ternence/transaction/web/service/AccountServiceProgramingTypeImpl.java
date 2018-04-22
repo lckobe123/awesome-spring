@@ -20,7 +20,7 @@ import java.math.BigDecimal;
  * @version 1.0
  * @since 2018/4/21 21:41
  */
-@Service
+@Service("accountServiceProgramingTypeImpl")
 @Conditional({ProgramingTypeInjectCondition.class})
 public class AccountServiceProgramingTypeImpl implements AccountService {
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountServiceProgramingTypeImpl.class);

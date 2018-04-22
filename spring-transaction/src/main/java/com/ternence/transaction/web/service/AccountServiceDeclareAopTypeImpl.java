@@ -9,14 +9,15 @@ import javax.annotation.Resource;
 import java.math.BigDecimal;
 
 /**
- * 账户服务业务的实现类,使用申明式的事务（动态代理）
+ * 账户服务业务的实现类,使用申明式的事务(aop)
  *
  * @author Ternence
  * @version 1.0
  * @since 2018/4/21 21:41
  */
-public class AccountServiceDeclareTypeImpl implements AccountService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AccountServiceDeclareTypeImpl.class);
+@Service("accountServiceDeclareAopTypeImpl")
+public class AccountServiceDeclareAopTypeImpl implements AccountService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AccountServiceDeclareAopTypeImpl.class);
     @Resource
     private AccountMapper accountMapper;
 

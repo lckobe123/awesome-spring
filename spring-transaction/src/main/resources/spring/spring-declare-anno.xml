@@ -46,35 +46,9 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <!--suppress XmlDefaultAttributeValue -->
+    <!--开启基于注解的事务管理，这样就可以使用@Transactional注解使用事务-->
+    <tx:annotation-driven transaction-manager="transactionManager"
+                          proxy-target-class="true"/>
 
-    <bean id="accountServiceDeclareTypeImpl"
-          class="com.ternence.transaction.web.service.AccountServiceDeclareTypeImpl"/>
-
-    <!--service层面的事务代理类，被增强的类会被加上事务处理-->
-    <bean id="declareAccountServiceProxy"
-          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-        <property name="transactionManager" ref="transactionManager"/>
-        <!--是否代理目标类,如果指定的是一个接口则用jdk的代理否则使用cglib的代理-->
-        <property name="proxyTargetClass" value="true"/>
-        <!--需要被代理的类-->
-        <property name="target" ref="accountServiceDeclareTypeImpl"/>
-        <!--注入事务属性-->
-        <property name="transactionAttributes">
-            <props>
-                <!--
-                  PROPAGATION:传播行为
-                  ISOLATION:隔离级别
-                  readOnly:是否只读,提示数据库驱动程序和数据库系统，这个事务并不包含更改数据的操作，
-                           那么JDBC驱动程序和数据库就有可能根据这种情况对该事务进行一些特定的优化，
-                           比方说不安排相应的数据库锁，以减轻事务对数据库的压力
-                  -Exception:发生哪些异常回滚
-                  +Exception:发生那些异常不回滚
-                  -->
-                <prop key="transfer">
-                    PROPAGATION_REQUIRED,
-                    +java.lang.ArithmeticException
-                </prop>
-            </props>
-        </property>
-    </bean>
 </beans>

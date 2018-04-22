@@ -2,10 +2,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+       http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
     <!--配置Spring的事务,mybatis-->
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
@@ -46,35 +47,28 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <!--配置事务通知(切面思想),增强这些类-->
+    <!--suppress XmlDefaultAttributeValue -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <!--
+            no-rollback-for:发生那些异常不会回滚
+               rollback-for:发生那些异常会回滚
+                propagation:传播行为
+                  isolation:隔离级别
+                   readOnly:是否为只读事务
+            -->
+            <!--suppress XmlDefaultAttributeValue -->
+            <tx:method name="transfer" propagation="REQUIRED" isolation="READ_COMMITTED"
+                       no-rollback-for="java.lang.ArithmeticException"/>
+        </tx:attributes>
+    </tx:advice>
 
-    <bean id="accountServiceDeclareTypeImpl"
-          class="com.ternence.transaction.web.service.AccountServiceDeclareTypeImpl"/>
-
-    <!--service层面的事务代理类，被增强的类会被加上事务处理-->
-    <bean id="declareAccountServiceProxy"
-          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-        <property name="transactionManager" ref="transactionManager"/>
-        <!--是否代理目标类,如果指定的是一个接口则用jdk的代理否则使用cglib的代理-->
-        <property name="proxyTargetClass" value="true"/>
-        <!--需要被代理的类-->
-        <property name="target" ref="accountServiceDeclareTypeImpl"/>
-        <!--注入事务属性-->
-        <property name="transactionAttributes">
-            <props>
-                <!--
-                  PROPAGATION:传播行为
-                  ISOLATION:隔离级别
-                  readOnly:是否只读,提示数据库驱动程序和数据库系统，这个事务并不包含更改数据的操作，
-                           那么JDBC驱动程序和数据库就有可能根据这种情况对该事务进行一些特定的优化，
-                           比方说不安排相应的数据库锁，以减轻事务对数据库的压力
-                  -Exception:发生哪些异常回滚
-                  +Exception:发生那些异常不回滚
-                  -->
-                <prop key="transfer">
-                    PROPAGATION_REQUIRED,
-                    +java.lang.ArithmeticException
-                </prop>
-            </props>
-        </property>
-    </bean>
+    <!--配置切面-->
+    <aop:config>
+        <aop:pointcut id="transPointcut"
+                      expression="execution(* com.ternence.transaction.web.service.AccountServiceDeclareAopTypeImpl.*(..))"/>
+        <!--在这个切入点应用这个增强-->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="transPointcut"/>
+    </aop:config>
 </beans>

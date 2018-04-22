@@ -18,5 +18,5 @@ public interface AccountService {
      * @param in    转出账户名称
      * @param money 流转的金额
      */
-    void transfer(String out, String in, BigDecimal money);
+    void transfer(String out, String in, BigDecimal money) throws Exception;
 }

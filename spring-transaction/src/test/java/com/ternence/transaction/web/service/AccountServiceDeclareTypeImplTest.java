@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 import java.math.BigDecimal;
 
 /**
- * 申明式事务测试
+ * 申明式事务测试，使用xml配置动态代理的方式做事务处理(不常用)
  *
  * @author Ternence
  * @version 1.0

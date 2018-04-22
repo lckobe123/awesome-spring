@@ -6,24 +6,29 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
+
 import java.math.BigDecimal;
 
+import static org.junit.Assert.*;
+
 /**
- * 账户业务测试类，在程序中增加事务代码执行,(这种方法侵入性强不常用)
+ * 基于注解的事务管理测试
  *
  * @author Ternence
  * @version 1.0
- * @since 2018/4/21 22:49
+ * @since 2018/4/22 15:11
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({"classpath:/spring/spring-programing.xml",
-        "classpath:spring/springmvc.xml"})
-public class AccountServiceTest {
+@ContextConfiguration({"classpath:spring/springmvc.xml", "classpath:spring/spring-declare-anno.xml"})
+public class AccountServiceBaseAnnoTypeImplTest {
+
     @Resource
-    private AccountService accountServiceProgramingTypeImpl;
+    private AccountService accountServiceBaseAnnoTypeImpl;
 
     @Test
     public void transfer() throws Exception {
-        accountServiceProgramingTypeImpl.transfer("charles", "ternence", new BigDecimal(100D));
+
+        accountServiceBaseAnnoTypeImpl.transfer("ternence", "charles", new BigDecimal(1000D));
     }
+
 }
