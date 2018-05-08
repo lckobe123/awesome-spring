@@ -47,6 +47,7 @@
         <shiro.version>1.4.0</shiro.version>
         <freemarker.version>2.3.23</freemarker.version>
         <drools.version>7.3.0.Final</drools.version>
+        <commons-logging.version>1.2</commons-logging.version>
         <spring.security.version>4.2.3.RELEASE</spring.security.version>
         <spring.webflow.version>2.4.4.RELEASE</spring.webflow.version>
         <amqp-client.version>5.1.1</amqp-client.version>
@@ -222,6 +223,12 @@
                         <artifactId>commons-logging</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>${commons-logging.version}</version>
             </dependency>
 
             <dependency>
