@@ -4,7 +4,9 @@ import com.ternence.spring.dubbo.api.ServiceApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * service api 的实现类
@@ -19,14 +21,14 @@ public class ServiceApiImpl implements ServiceApi {
     @Override
     public Object service(String word) {
         System.out.println("Hello , " + word);
-        return Arrays.asList(getAllChar(word));
+        return getAllChar(word);
     }
 
-    private char[] getAllChar(String word) {
-        char[] chars = new char[word.length()];
+    private List<Character> getAllChar(String word) {
+        List<Character> characters = new ArrayList<>();
         for (int i = 0; i < word.length(); i++) {
-            chars[i] = word.charAt(i);
+            characters.add(word.charAt(i));
         }
-        return chars;
+        return characters;
     }
 }

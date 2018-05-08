@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://code.alibabatech.com/schema/dubbo
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <description>spring整合dubbo的配置文件</description>
+
+    <!--服务名称-->
+    <dubbo:application name="service-consumer"/>
+
+    <!--注册中心-->
+    <dubbo:registry id="registryDefault"
+                    address="zookeeper://192.168.72.128:2181"/>
+
+    <!--暴露的服务的接口信息-->
+    <dubbo:reference interface="com.ternence.spring.dubbo.api.ServiceApi"
+                     id="serviceApiImpl"
+                     registry="registryDefault"/>
+</beans>
