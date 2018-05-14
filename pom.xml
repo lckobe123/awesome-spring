@@ -31,6 +31,7 @@
         <module>spring-feign</module>
         <module>spring-dubbo</module>
         <module>spring-dubbo</module>
+        <module>spring-disconf</module>
     </modules>
 
     <properties>
