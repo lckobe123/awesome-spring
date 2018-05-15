@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>spring-skills</artifactId>
+        <groupId>com.ternence.spring.skills</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <description>maven的filter功能测试</description>
+    <artifactId>maven-filters</artifactId>
+
+
+    <!--
+    1:使用mvn compile -P profileId 来指定激活的配置文件
+    -->
+
+    <profiles>
+        <!--指定测试环境的一系列配置项,和激活条件-->
+        <profile>
+            <id>test</id>
+            <properties>
+                <env>test</env>
+            </properties>
+            <!--定义激活条件-->
+            <activation>
+                <activeByDefault>true</activeByDefault><!--默认激活测试环境的配置-->
+            </activation>
+        </profile>
+
+        <!--指定生产环境的一系列配置项,和激活条件-->
+        <profile>
+            <id>product</id>
+            <properties>
+                <env>product</env>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <finalName>maven-filters</finalName>
+
+        <!--指定filter — 也就是存在配置的文件-->
+        <filters>
+            <filter>src/main/filters/maven-${env}.properties</filter>
+        </filters>
+
+        <!--指定普通资源的编译产物的存放路径-->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <!--这一点特别关键，指定为true之后resources中的文件就能引用到profile中定义的属性了-->
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+    </build>
+</project>

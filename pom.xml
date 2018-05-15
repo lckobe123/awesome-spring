@@ -32,6 +32,8 @@
         <module>spring-dubbo</module>
         <module>spring-dubbo</module>
         <module>spring-disconf</module>
+        <module>maven-filters</module>
+        <module>spring-stream-rxjava</module>
     </modules>
 
     <properties>
