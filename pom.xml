@@ -20,8 +20,6 @@
         <module>spring-shiro-cas-server</module>
         <module>spring-webflow</module>
         <module>spring-webservice</module>
-        <module>retrofit</module>
-        <module>annotation-utils</module>
         <module>spring-redis</module>
         <module>spring-quartz</module>
         <module>spring-rabbitmq</module>

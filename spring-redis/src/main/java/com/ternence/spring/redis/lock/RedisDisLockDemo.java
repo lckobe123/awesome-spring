@@ -1,4 +1,4 @@
-package com.ternence.spring.redis;
+package com.ternence.spring.redis.lock;
 
 import org.redisson.Config;
 import org.redisson.Redisson;
