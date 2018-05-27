@@ -32,6 +32,8 @@
         <module>spring-disconf</module>
         <module>maven-filters</module>
         <module>spring-stream-rxjava</module>
+        <module>spring-sharding-jdbc</module>
+        <module>spring-aop</module>
     </modules>
 
     <properties>
