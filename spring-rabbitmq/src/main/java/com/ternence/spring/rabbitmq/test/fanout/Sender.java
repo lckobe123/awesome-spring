@@ -25,7 +25,7 @@ public class Sender {
         //创建一个exchange
         channel.exchangeDeclare(EXCHANGE_NAME, "fanout");
 
-        for (int i = 0; i < 5000; i++) {
+        for (int i = 0; i < 50; i++) {
             String content = "第" + i + "条消息";
             System.out.println(content);
             //exchange为空白字符串,表示默认的交换器(direct类型),队列名称作为routing key

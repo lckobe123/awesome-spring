@@ -15,9 +15,9 @@ public class ConnectionUtils {
     public static Connection getConnection() {
         ConnectionFactory factory = new ConnectionFactory();
         try {
-            factory.setHost("192.168.70.2");
+            factory.setHost("192.168.72.128");
             factory.setUsername("admin");
-            factory.setPassword("123456");
+            factory.setPassword("a123456");
             factory.setPort(5672);
             factory.setVirtualHost("/");
             return factory.newConnection();
