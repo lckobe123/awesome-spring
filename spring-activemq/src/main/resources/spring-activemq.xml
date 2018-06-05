@@ -5,4 +5,50 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
     <!--spring 整合 activemq的配置文件-->
 
+    <!--单例的ActiveMQ连接工厂-->
+    <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="tcp://192.168.72.128:61616"/>
+        <property name="userName" value="admin"/>
+        <property name="password" value="admin"/>
+    </bean>
+
+    <!--ActiveMQ的连接池-->
+    <bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory" destroy-method="stop">
+        <property name="maxConnections" value="1000"/>
+        <property name="connectionFactory" ref="connectionFactory"/>
+    </bean>
+
+    <!--连接池的缓存-->
+    <bean id="cachingConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <property name="targetConnectionFactory" ref="pooledConnectionFactory"/>
+        <property name="sessionCacheSize" value="1"/>
+    </bean>
+
+    <!--操作消息服务器的消息服务模板-->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="pooledConnectionFactory"/>
+        <property name="messageConverter">
+            <bean class="org.springframework.jms.support.converter.SimpleMessageConverter"/>
+        </property>
+    </bean>
+
+    <!--创建一个队列-->
+    <bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg name="name" value="spring-test-queue"/>
+    </bean>
+
+    <!--测试一个topic-->
+    <bean id="topicDestination" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg name="name" value="spring-test-topic"/>
+    </bean>
+
+    <!--配置一个消息接受者-->
+    <bean id="messageListener" class="com.ternence.spring.skills.activemq.consumer.ActiveMQMessageListener"/>
+
+    <bean id="jmsContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="cachingConnectionFactory"/>
+        <property name="destination" ref="topicDestination"/>
+        <property name="messageListener" ref="messageListener"/>
+    </bean>
 </beans>
