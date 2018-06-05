@@ -27,7 +27,6 @@
         <module>spring-io</module>
         <module>spring-feign</module>
         <module>spring-dubbo</module>
-        <module>spring-dubbo</module>
         <module>spring-disconf</module>
         <module>spring-maven-filters</module>
         <module>spring-stream-rxjava</module>
@@ -59,6 +58,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jms</artifactId>
+                <version>${springframework.version}</version>
+            </dependency>
             <!--rabbitmq-->
             <dependency>
                 <groupId>org.springframework.amqp</groupId>
