@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <description>maven的filter功能测试</description>
-    <artifactId>maven-filters</artifactId>
+    <artifactId>spring-maven-filters</artifactId>
 
 
     <!--

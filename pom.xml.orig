@@ -31,9 +31,12 @@
         <module>spring-disconf</module>
         <module>spring-maven-filters</module>
         <module>spring-stream-rxjava</module>
+<<<<<<< HEAD
         <module>spring-sharding-jdbc</module>
         <module>spring-aop</module>
+=======
         <module>spring-activemq</module>
+>>>>>>> 删除多余的 ，不需要的内容
     </modules>
 
     <properties>
