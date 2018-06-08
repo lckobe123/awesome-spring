@@ -33,6 +33,7 @@
         <module>spring-sharding-jdbc</module>
         <module>spring-aop</module>
         <module>spring-activemq</module>
+        <module>spring-poi</module>
     </modules>
 
     <properties>
