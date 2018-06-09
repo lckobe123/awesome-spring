@@ -34,6 +34,7 @@
         <module>spring-aop</module>
         <module>spring-activemq</module>
         <module>spring-poi</module>
+        <module>spring-embedded-tomcat</module>
     </modules>
 
     <properties>
