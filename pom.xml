@@ -36,6 +36,7 @@
         <module>spring-activemq</module>
         <module>spring-poi</module>
         <module>spring-embedded-tomcat</module>
+        <module>spring-guava</module>
     </modules>
 
     <properties>
