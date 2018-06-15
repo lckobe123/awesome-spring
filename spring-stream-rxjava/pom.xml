@@ -11,5 +11,10 @@
     <description>流氏编程和响应式编程的练习项目</description>
     <artifactId>spring-stream-rxjava</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+    </dependencies>
 </project>
