@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress UnparsedCustomBeanInspection -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:reg="http://www.dangdang.com/schema/ddframe/reg" xmlns:job="http://www.dangdang.com/schema/ddframe/job"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.dangdang.com/schema/ddframe/reg
+       http://www.dangdang.com/schema/ddframe/reg/reg.xsd http://www.dangdang.com/schema/ddframe/job http://www.dangdang.com/schema/ddframe/job/job.xsd">
+
+    <description>spring 整合 elastic-job的配置文件</description>
+
+    <!--单节点配置注册中心-->
+    <reg:zookeeper id="registryCenter" server-lists="192.168.72.128:2181" namespace="my-jobs"
+                   max-retries="3" max-sleep-time-milliseconds="3000"/>
+
+    <!--配置job,每两秒执行一次-->
+    <!--必须有id，这就是job的名称，否则抛出以下异常-->
+    <!--java.lang.IllegalArgumentException: Invalid path string "//config" caused by empty node name specified -->
+    <job:simple id="myPrintServiceTask" class="com.ternence.spring.skills.job.task.MyPrintServiceTask"
+                registry-center-ref="registryCenter" cron="0/2 * * * * ?" sharding-total-count="2"
+                overwrite="true" sharding-item-parameters="0=A,1=B,2=C"/>
+</beans>
