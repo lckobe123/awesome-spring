@@ -39,6 +39,7 @@
         <module>spring-guava</module>
         <module>spring-elastic-job</module>
         <module>spring-logging</module>
+        <module>spring-tag</module>
     </modules>
 
     <properties>

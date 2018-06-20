@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tao="http://www.ternence.com/schema/tao"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.ternence.com/schema/tao
+       http://www.ternence.com/schema/tao.xsd">
+
+    <tao:instance id="ternence" email="1312058405@qq.com" user-name="taojianghang"/>
+
+</beans>
