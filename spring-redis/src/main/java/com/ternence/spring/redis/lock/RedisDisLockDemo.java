@@ -1,9 +1,9 @@
 package com.ternence.spring.redis.lock;
 
-import org.redisson.Config;
 import org.redisson.Redisson;
-import org.redisson.RedissonClient;
-import org.redisson.core.RLock;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
 
 import java.util.concurrent.*;
 
