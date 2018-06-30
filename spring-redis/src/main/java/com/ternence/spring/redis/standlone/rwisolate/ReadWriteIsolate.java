@@ -1,4 +1,4 @@
-package com.ternence.spring.redis.rwisolate;
+package com.ternence.spring.redis.standlone.rwisolate;
 
 /**
  * redis读写分离应用代码

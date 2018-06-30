@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:redisson="http://redisson.org/schema/redisson"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://redisson.org/schema/redisson http://redisson.org/schema/redisson/redisson.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <description>spring整合redisson,redisson内部就提供了自定义的spring标签,不需要另外的依赖</description>
+
+    <context:property-placeholder location="classpath:redisson.properties"
+                                  file-encoding="UTF-8"/>
+
+    <!--指定redis集群-->
+    <redisson:client id="redissonClient">
+        <!--每分钟自动刷新-->
+        <redisson:cluster-servers scan-interval="#{1000*10*6}">
+            <redisson:node-address value="${redis.cluster.node.1}"/>
+            <redisson:node-address value="${redis.cluster.node.2}"/>
+            <redisson:node-address value="${redis.cluster.node.3}"/>
+            <redisson:node-address value="${redis.cluster.node.4}"/>
+            <redisson:node-address value="${redis.cluster.node.5}"/>
+            <redisson:node-address value="${redis.cluster.node.6}"/>
+        </redisson:cluster-servers>
+    </redisson:client>
+</beans>

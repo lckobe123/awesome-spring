@@ -1,4 +1,4 @@
-package com.ternence.spring.redis.lock;
+package com.ternence.spring.redis.standlone.lock;
 
 /**
  * @author Ternence
