@@ -1,7 +1,7 @@
 package com.ternence.spring.redis;
 
-import com.ternence.spring.redis.cluster.lock.ParseJob;
-import com.ternence.spring.redis.cluster.lock.SimpleJob;
+import com.ternence.spring.redis.cluster.lock.job.ParseJob;
+import com.ternence.spring.redis.cluster.lock.job.SimpleJob;
 import com.ternence.spring.redis.cluster.utils.RedissonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,6 @@ public class ApplicationStarter {
         //test your code
         ApplicationStarter starter = new ApplicationStarter();
         starter.testJob();
-
     }
 
     private void testJob() {

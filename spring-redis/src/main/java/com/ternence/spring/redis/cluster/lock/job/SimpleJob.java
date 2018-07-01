@@ -1,4 +1,4 @@
-package com.ternence.spring.redis.cluster.lock;
+package com.ternence.spring.redis.cluster.lock.job;
 
 /**
  * @author Ternence

@@ -1,10 +1,7 @@
 package com.ternence.spring.redis.cluster.utils;
 
 import com.ternence.spring.redis.utils.SpringContextHolder;
-import org.redisson.api.RBucket;
-import org.redisson.api.RBuckets;
-import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
+import org.redisson.api.*;
 import org.redisson.client.codec.Codec;
 import org.redisson.client.codec.StringCodec;
 
@@ -40,6 +37,11 @@ public class RedissonUtils {
     public static RBucket<String> getStringBucket(String key) {
 
         return internalGetClient().getBucket(key, StringCodec.INSTANCE);
+    }
+
+    public static RSemaphore getSemaphore(String key) {
+
+        return internalGetClient().getSemaphore(key);
     }
 
     public static void release() {

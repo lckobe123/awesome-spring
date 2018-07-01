@@ -1,12 +1,9 @@
-package com.ternence.spring.redis.cluster.lock;
+package com.ternence.spring.redis.cluster.lock.job;
 
 import com.ternence.spring.redis.cluster.utils.RedissonUtils;
 import org.redisson.api.RLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 模拟一个分布式的job，很多定时任务在定时的执行这个job，

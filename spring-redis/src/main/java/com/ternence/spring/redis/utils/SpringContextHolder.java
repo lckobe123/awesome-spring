@@ -25,6 +25,10 @@ public class SpringContextHolder implements ApplicationContextAware {
         LOGGER.info("Inject application context !");
     }
 
+    /**
+     * 千万注意不要再bean初始化期间调用这个方法,这样会导致试图用一个没有完全初始化的bean
+     * 初始化另一个bean，这很危险
+     */
     public static <T> T getBean(Class<T> type) {
         assertContextNotNull();
         if (type == null) return null;
