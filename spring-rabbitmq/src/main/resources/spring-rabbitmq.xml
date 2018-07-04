@@ -1,10 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd">
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
 
     <description>rabbitmq的描述文件</description>
 
-    
+    <context:property-placeholder location="classpath:rabbitmq.properties"/>
+
+    <!--rabbitmq connection factory-->
+    <rabbit:connection-factory id="connectionFactory" username="${rabbitmq.username}"
+                               password="${rabbitmq.password}" host="${rabbitmq.host}"
+                               virtual-host="${rabbitmq.vhost}"
+                               port="${rabbitmq.port}"/>
+
+    <!--通过指定下面的admin信息，当前producer中的exchange和queue会在rabbitmq服务器上自动生成 -->
+    <rabbit:admin connection-factory="connectionFactory" id="rabbitAdmin"/>
+
+    <!--声明一个队列,自动创建的-->
+    <rabbit:queue name="mobile_change_queue" declared-by="rabbitAdmin"
+                  exclusive="false"
+                  durable="true" auto-delete="false"/>
+
+    <!--申明一个交换机-->
+    <rabbit:direct-exchange name="mobileExchange">
+        <rabbit:bindings>
+            <rabbit:binding queue="mobile_change_queue" key="modify_member_mobile"/>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+
+    <!--消息发送器-->
+    <rabbit:template id="rabbitTemplate" connection-factory="connectionFactory"
+                     exchange="mobileExchange"/>
+
+    <!--消息接收器,有消息到达时会通知监听在对应的队列上的监听对象-->
+    <rabbit:listener-container connection-factory="connectionFactory">
+        <rabbit:listener ref="mobileChangeListener" queues="mobile_change_queue"/>
+    </rabbit:listener-container>
 </beans>
