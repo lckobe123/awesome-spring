@@ -7,8 +7,7 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath:spring-application.xml,
-            classpath:spring-dubbo.xml
+            classpath:spring-application.xml
         </param-value>
     </context-param>
 

@@ -5,4 +5,5 @@
 
     <description>spring父容器的配置文件</description>
 
+    <import resource="classpath:spring-dubbo.xml"/>
 </beans>

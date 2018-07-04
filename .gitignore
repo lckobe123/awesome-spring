@@ -28,3 +28,4 @@ rebel.xml
 
 *.debug
 node_modules/
+dubbo/

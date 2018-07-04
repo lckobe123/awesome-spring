@@ -11,12 +11,14 @@
     <!--服务名称-->
     <dubbo:application name="service-consumer"/>
 
+    <dubbo:protocol name="dubbo" port="20880"/>
+
     <!--注册中心-->
-    <dubbo:registry id="registryDefault"
-                    address="zookeeper://192.168.72.128:2181"/>
+    <dubbo:registry id="registryDefault" protocol="zookeeper"
+                    address="192.168.72.128:2181"
+                    file="./dubbo/dubbo-registry-service-consumer-192.168.72.128"/>
 
     <!--暴露的服务的接口信息-->
     <dubbo:reference interface="com.ternence.spring.dubbo.api.ServiceApi"
-                     id="serviceApiImpl"
-                     registry="registryDefault"/>
+                     id="serviceApiImpl" registry="registryDefault"/>
 </beans>
