@@ -40,6 +40,7 @@
         <module>spring-elastic-job</module>
         <module>spring-logging</module>
         <module>spring-tag</module>
+        <module>spring-minio</module>
     </modules>
 
     <properties>
