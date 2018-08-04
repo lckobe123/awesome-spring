@@ -41,6 +41,7 @@
         <module>spring-logging</module>
         <module>spring-tag</module>
         <module>spring-minio</module>
+        <module>spring-zookeeper</module>
     </modules>
 
     <properties>
