@@ -26,8 +26,7 @@ public class RedisOperationsTest {
     private JedisCluster jedisCluster;
 
     @Test
-    public void stringScan() {
-
+    public void divideScan() {
         Map<String, JedisPool> jedisPoolMap = jedisCluster.getClusterNodes();
         List<String> scanFinalResult = new ArrayList<>();
         jedisPoolMap.keySet().forEach(key -> {
@@ -49,9 +48,30 @@ public class RedisOperationsTest {
                 LOGGER.info("游标:{}", cursor);
             } while (!"0".equals(cursor));
         });
-
         LOGGER.info("扫描结果为:size={},result={}", scanFinalResult.size(), scanFinalResult);
+    }
+
+    /**
+     * 但对于RedisCluster来说，是不可以对所有键进行scan操作的，但可以针对其他数据类型，比如hash, zset，
+     * 进行一系列hscan，zscan操作。其实可以从jedisCluster的实现可以看出，如果要对所有key进行scan，
+     * 需要实现MultiKeyCommands，但RedisCluster是不支持这类型操作的，同理pipeline，mget，mset等操作。
+     */
+    @Test
+    public void scan() {
+
+        //set zset hash list
+        /*jedisCluster.sscan("", "0");
+        jedisCluster.zscan("", "0");
+        jedisCluster.hscan("", "0");*/
 
 
+        ScanParams params = new ScanParams();
+        params.match("linked*");
+        String cursor = "0";
+        do {
+            ScanResult<String> scanResult = jedisCluster.scan(cursor, params);
+            cursor = scanResult.getStringCursor();
+            LOGGER.info("扫描结果为:{}", scanResult.getResult());
+        } while (!"0".equals(cursor));
     }
 }
