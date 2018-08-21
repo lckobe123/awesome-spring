@@ -6,10 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisCluster;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.ScanResult;
+import redis.clients.jedis.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -39,7 +36,9 @@ public class RedisOperationsTest {
             Jedis jedis = jedisPool.getResource();
             String cursor = "0";
             do {
-                ScanResult<String> scanResult = jedis.scan(cursor);
+                ScanParams params = new ScanParams();
+                params.match("linked*");
+                ScanResult<String> scanResult = jedis.scan(cursor, params);
                 cursor = scanResult.getStringCursor();
                 scanResult.getResult().forEach(item -> {
                     if (!item.startsWith("PV")) {
