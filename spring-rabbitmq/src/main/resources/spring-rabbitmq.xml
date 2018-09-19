@@ -34,7 +34,15 @@
                      exchange="mobileExchange"/>
 
     <!--消息接收器,有消息到达时会通知监听在对应的队列上的监听对象-->
-    <rabbit:listener-container connection-factory="connectionFactory">
+    <rabbit:listener-container connection-factory="connectionFactory" prefetch="1" >
         <rabbit:listener ref="mobileChangeListener" queues="mobile_change_queue"/>
     </rabbit:listener-container>
+
+    <bean id="rabbitListenerContainerFactory"
+          class="org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="concurrentConsumers" value="3"/>
+        <property name="maxConcurrentConsumers" value="10"/>
+        <property name="acknowledgeMode" value="AUTO"/>
+    </bean>
 </beans>
