@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="myClass" class="com.ternence.spring.test.MyClass"/>
+
+    <bean id="car" name="car2,car3,car4"
+          class="com.ternence.spring.test.bean.CarFactoryBean">
+        <property name="brand" value="玛莎拉蒂"/>
+    </bean>
+
+    <alias name="car" alias="car5"/>
+</beans>
