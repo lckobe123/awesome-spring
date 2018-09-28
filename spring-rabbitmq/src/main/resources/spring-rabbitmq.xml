@@ -20,9 +20,7 @@
     <rabbit:admin connection-factory="connectionFactory" id="rabbitAdmin"/>
 
     <!--声明一个队列,自动创建的-->
-    <rabbit:queue name="mobile_change_queue" declared-by="rabbitAdmin"
-                  exclusive="false"
-                  durable="true" auto-delete="false"/>
+    <rabbit:queue name="mobile_change_queue" declared-by="rabbitAdmin"/>
 
     <!--申明一个交换机-->
     <rabbit:direct-exchange name="mobileExchange">
@@ -36,7 +34,15 @@
                      exchange="mobileExchange"/>
 
     <!--消息接收器,有消息到达时会通知监听在对应的队列上的监听对象-->
-    <rabbit:listener-container connection-factory="connectionFactory">
+    <rabbit:listener-container connection-factory="connectionFactory" prefetch="1" >
         <rabbit:listener ref="mobileChangeListener" queues="mobile_change_queue"/>
     </rabbit:listener-container>
+
+    <bean id="rabbitListenerContainerFactory"
+          class="org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="concurrentConsumers" value="3"/>
+        <property name="maxConcurrentConsumers" value="10"/>
+        <property name="acknowledgeMode" value="AUTO"/>
+    </bean>
 </beans>
