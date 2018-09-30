@@ -1,11 +1,8 @@
 package com.ternence.spring.test.bean;
 
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
-import org.springframework.beans.factory.xml.XmlBeanFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 
 /**
@@ -24,18 +21,23 @@ public class TestSpringBeanFactory {
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
         reader.loadBeanDefinitions(new ClassPathResource("spring-beans.xml"));
 
-        BeanDefinition beanDefinition = beanFactory.getBeanDefinition("car");
-        System.out.println(beanDefinition);
+        //BeanDefinition beanDefinition = beanFactory.getBeanDefinition("car");
+        //System.out.println(beanDefinition);
 
         //MyClass myClass = factory.getBean(MyClass.class);
         //System.out.println(myClass);
 
-        System.out.println(beanFactory.getBean("&car"));
-        System.out.println(beanFactory.getBean(Car.class));
-        System.out.println(beanFactory.getBean("car"));
+        //System.out.println(beanFactory.getBean("&car"));
+        //System.out.println(beanFactory.getBean(Car.class));
+        //System.out.println(beanFactory.getBean("car"));
 
         /*for (String alia : factory.getAliases("car3")) {
             System.out.println(alia);
         }*/
+
+        System.out.println(beanFactory.getBean("carTemplate"));
+        System.out.println(beanFactory.getBean("benzCar"));
+
+        System.out.println("benzCard of parent is : "+beanFactory.getBeanDefinition("benzCar").getParentName());
     }
 }

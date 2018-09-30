@@ -12,4 +12,16 @@
     </bean>
 
     <alias name="car" alias="car5"/>
+
+
+    <!--bean的继承-->
+    <bean id="carTemplate" class="com.ternence.spring.test.bean.Car">
+        <property name="brand" value="UNKNOWN"/>
+        <property name="color" value="RED"/>
+        <property name="price" value="0"/>
+    </bean>
+
+    <bean id="benzCar" class="com.ternence.spring.test.bean.BenzCar" parent="carTemplate">
+        <property name="owner" value="陶江航"/>
+    </bean>
 </beans>
