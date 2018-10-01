@@ -1,12 +1,8 @@
 package com.ternence.spring.test.xml;
 
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.xml.ResourceEntityResolver;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.util.xml.SimpleSaxErrorHandler;
 import org.springframework.util.xml.XmlValidationModeDetector;
 import org.w3c.dom.Document;
@@ -54,66 +50,47 @@ public class XmlParser {
         //无需验证的加载Document的方法
         /*Document document = xmlParser.loadDocument(inputSource, null,
                 new SimpleSaxErrorHandler(LogFactory.getLog(XmlParser.class)),
-                XmlValidationModeDetector.VALIDATION_NONE, false);*/
+                XmlValidationModeDetector.VALIDATION_NONE);*/
 
         //验证的加载Document的方法
-        Document document = xmlParser.loadDocument(inputSource,  new InternalEntityResolver(),
+        Document document = xmlParser.loadDocument(inputSource, new InternalEntityResolver(),
                 new SimpleSaxErrorHandler(LogFactory.getLog(XmlParser.class)),
-                XmlValidationModeDetector.VALIDATION_XSD, false);
+                XmlValidationModeDetector.VALIDATION_XSD);
 
         System.out.println(document);
+
     }
 
 
-    private static void parseBySax() {
+    private static void validateAndParse() throws SAXException, IOException, ParserConfigurationException {
         SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         URL xsdUrl = XmlParser.class.getResource("/xml/students.xsd");
         String xsdPath = xsdUrl.getPath();
-        Schema schema;
-        try {
-            schema = factory.newSchema(new File(xsdPath));
-        } catch (SAXException e) {
-            System.out.println("不合法的schema");
-            e.printStackTrace();
-            return;
-        }
+        Schema schema = factory.newSchema(new File(xsdPath));
         Validator validator = schema.newValidator();
         URL xmlUrl = XmlParser.class.getResource("/xml/students.xml");
         String xmlPath = xmlUrl.getPath();
-        try {
-            validator.validate(new StreamSource(new File(xmlPath)));
-        } catch (SAXException | IOException e) {
-            System.out.println("验证xml异常");
-            e.printStackTrace();
-            return;
-        }
-
+        validator.validate(new StreamSource(new File(xmlPath)));
         System.out.println("验证成功,开始解析...");
-
-        try {
-            parse(xmlPath);
-        } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
-        }
+        parse(xmlPath);
     }
 
     private static void parse(String systemId) throws ParserConfigurationException, SAXException, IOException {
-
         // step 1: 获得SAX解析器工厂实例
         SAXParserFactory factory = SAXParserFactory.newInstance();
-
         // step 2: 获得SAX解析器实例
         SAXParser parser = factory.newSAXParser();
-
         // step 3: 开始进行解析 传入待解析的文档的处理器
         parser.parse(new File(systemId), new SAXDefaultHandler());
     }
 
 
-    public Document loadDocument(InputSource inputSource, EntityResolver entityResolver,
-                                 ErrorHandler errorHandler, int validationMode, boolean namespaceAware) throws Exception {
-
-        DocumentBuilderFactory factory = createDocumentBuilderFactory(validationMode, namespaceAware);
+    /**
+     * 不直接使用SAX,而是使用JAXP规范来处理xml的装载
+     */
+    private Document loadDocument(InputSource inputSource, EntityResolver entityResolver,
+                                  ErrorHandler errorHandler, int validationMode) throws Exception {
+        DocumentBuilderFactory factory = createDocumentBuilderFactory(validationMode, false);
         DocumentBuilder builder = createDocumentBuilder(factory, entityResolver, errorHandler);
         return builder.parse(inputSource);
     }
