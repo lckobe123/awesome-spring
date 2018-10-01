@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--定义一系列的学生-->
+<!--xmlns 指明本文档中使用的元素都在这个名称空间下被申明的-->
+<!--xsi:schemaLocation 作用是指定本xml使用xsd的位置，他有两个值,第一个是xmlns，第二个是xsd的名字
+xsd中必须以第一个值作为默认的xmlns,否则会找不到元素，
+指明本xml中使用的元素都在以这个url作为namespace的xsd中定义了-->
+<students xmlns="http://www.github.com.cn/schema/students"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.github.com.cn/schema/students students.xsd">
+
+    <principal id="1207010166">
+        <master>郑强</master>
+        <vice>袁小泉</vice>
+        <vice>刘永义</vice>
+        <vice>成大正</vice>
+    </principal>
+
+    <student id="1207010166">
+        <no>12070101166</no>
+        <mobile>18798624470</mobile>
+        <name>陶江航</name>
+        <school>贵州大学</school>
+    </student>
+
+    <student id="1207010167">
+        <no>12070101166</no>
+        <mobile>18798624470</mobile>
+        <name>陶江航</name>
+        <school>贵州大学</school>
+    </student>
+
+    <student id="1207010168">
+        <no>12070101166</no>
+        <mobile>18798624470</mobile>
+        <name>陶江航</name>
+        <school>贵州大学</school>
+    </student>
+
+    <student id="1207010169">
+        <no>12070101166</no>
+        <mobile>18798624470</mobile>
+        <name>陶江航</name>
+        <school>贵州大学</school>
+    </student>
+
+</students>

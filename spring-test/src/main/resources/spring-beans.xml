@@ -4,8 +4,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!--普通的bean测试-->
     <bean id="myClass" class="com.ternence.spring.test.MyClass"/>
 
+    <!--bean的别名测试-->
     <bean id="car" name="car2,car3,car4"
           class="com.ternence.spring.test.bean.CarFactoryBean">
         <property name="brand" value="玛莎拉蒂"/>
@@ -14,14 +16,23 @@
     <alias name="car" alias="car5"/>
 
 
-    <!--bean的继承-->
+    <!--bean的继承测试-->
     <bean id="carTemplate" class="com.ternence.spring.test.bean.Car">
         <property name="brand" value="UNKNOWN"/>
         <property name="color" value="RED"/>
         <property name="price" value="0"/>
     </bean>
 
-    <bean id="benzCar" class="com.ternence.spring.test.bean.BenzCar" parent="carTemplate">
+    <bean id="benzCar" class="com.ternence.spring.test.bean.BenzCar" parent="carTemplate" scope="prototype">
         <property name="owner" value="陶江航"/>
+
+        <!--bean自带的元数据-->
+        <meta key="size" value="size is 10*20*30"/>
     </bean>
+
+
+    <!--自动注入的demo,我们只是声明了依赖，但是没有显示的-->
+    <!--suppress AutowiredDependenciesInspection -->
+    <bean class="com.ternence.spring.test.bean.Family" autowire="byName"/>
+
 </beans>
