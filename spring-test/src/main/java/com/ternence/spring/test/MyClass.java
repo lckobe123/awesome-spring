@@ -9,5 +9,18 @@ package com.ternence.spring.test;
  */
 public class MyClass {
 
+    private String p;
+
+    public MyClass(String s) {
+    }
+
     void my(){}
+
+    public void setP(String p) {
+        this.p = p;
+    }
+
+    public String getP() {
+        return p;
+    }
 }

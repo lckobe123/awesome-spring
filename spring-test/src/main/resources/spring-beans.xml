@@ -5,7 +5,21 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!--普通的bean测试-->
-    <bean id="myClass" class="com.ternence.spring.test.MyClass"/>
+    <!--org.springframework.beans.factory.xml.BeanDefinitionParserDelegate.parseBeanDefinitionAttributes-->
+    <bean id="myClass" class="com.ternence.spring.test.MyClass">
+        <!--org.springframework.beans.factory.xml.BeanDefinitionParserDelegate.parseMetaElements-->
+        <meta key="test" value="testMeta"/>
+        <!--org.springframework.beans.factory.xml.BeanDefinitionParserDelegate.parseLookupOverrideSubElements-->
+        <lookup-method/>
+        <!--org.springframework.beans.factory.xml.BeanDefinitionParserDelegate.parseReplacedMethodSubElements-->
+        <replaced-method/>
+        <!--org.springframework.beans.factory.xml.BeanDefinitionParserDelegate.parseConstructorArgElements-->
+        <constructor-arg value="0"/>
+        <!--org.springframework.beans.factory.xml.BeanDefinitionParserDelegate.parsePropertyElements-->
+        <property name="p" value="test properties"/>
+        <!--org.springframework.beans.factory.xml.BeanDefinitionParserDelegate.parseQualifierElements-->
+        <qualifier/>
+    </bean>
 
     <!--bean的别名测试-->
     <bean id="car" name="car2,car3,car4"
