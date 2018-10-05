@@ -42,6 +42,7 @@
         <module>spring-tag</module>
         <module>spring-minio</module>
         <module>spring-zookeeper</module>
+        <module>spring-asm-cglib</module>
     </modules>
 
     <properties>
