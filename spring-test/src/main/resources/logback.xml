@@ -8,11 +8,7 @@
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <!--Console中这个配置不需要-->
-            <!--logback使用的是TOMCAT启动时候默认使用的编码，也就是操作系统使用的编码GBK，
-            所以强制编码会乱码的-->
-            <charset>GBK</charset>
-            <pattern>%highlight(%d{yyyy-MM-dd HH-mm-ss}) %highlight(%-5level) %highlight(%thread) %highlight(%logger[50]) %highlight(%line) %highlight(%n%msg%n)</pattern>
+            <pattern>%d{yyyy-MM-dd HH-mm-ss} %highlight(%-5level) %boldYellow(%thread) %cyan(%logger[50]) %boldGreen(%line) %highlight(%n%msg%n)</pattern>
         </encoder>
     </appender>
 

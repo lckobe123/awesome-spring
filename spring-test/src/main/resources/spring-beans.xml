@@ -10,15 +10,15 @@
         <!--org.springframework.beans.factory.xml.BeanDefinitionParserDelegate.parseMetaElements-->
         <meta key="test" value="testMeta"/>
         <!--org.springframework.beans.factory.xml.BeanDefinitionParserDelegate.parseLookupOverrideSubElements-->
-        <lookup-method/>
+        <!--<lookup-method/>-->
         <!--org.springframework.beans.factory.xml.BeanDefinitionParserDelegate.parseReplacedMethodSubElements-->
-        <replaced-method/>
+        <!--<replaced-method/>-->
         <!--org.springframework.beans.factory.xml.BeanDefinitionParserDelegate.parseConstructorArgElements-->
         <constructor-arg value="0"/>
         <!--org.springframework.beans.factory.xml.BeanDefinitionParserDelegate.parsePropertyElements-->
-        <property name="p" value="test properties"/>
+        <!--<property name="p" value="test properties"/>-->
         <!--org.springframework.beans.factory.xml.BeanDefinitionParserDelegate.parseQualifierElements-->
-        <qualifier/>
+        <!--<qualifier/>-->
     </bean>
 
     <!--bean的别名测试-->
