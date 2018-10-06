@@ -21,14 +21,15 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class ASMUsageDemo {
     private final static Logger logger = LoggerFactory.getLogger(ASMUsageDemo.class);
-    private static final String CLASS_NAME = "com.ternence.spring.skills.asm.HelloWorld";
+    private static final String CANONICAL_CLASS_NAME_WITHOUT_SUFFIX = "com.ternence.spring.skills.asm.HelloWorld";
 
     public static void main(String[] args) throws IllegalAccessException, InstantiationException,
             InvocationTargetException, IOException {
         ASMUsageDemo demo = new ASMUsageDemo();
         byte[] classAsData = demo.createHelloWorldMethod();
         demo.writeClassToFile(classAsData);
-        Class objectClass = new MyClassLoader().defineClassForName(CLASS_NAME, classAsData);
+        Class objectClass = new MyClassLoader().defineClassForName(
+                CANONICAL_CLASS_NAME_WITHOUT_SUFFIX, classAsData);
         logger.info("start invoke method");
         objectClass.getMethods()[0].invoke(objectClass.newInstance());
         logger.info("end invoke method");
@@ -47,11 +48,12 @@ public class ASMUsageDemo {
 
     private void writeClassToFile(byte[] classAsData) throws IOException {
         File classFile;
-        ClassPathResource resource = new ClassPathResource(getPackagePath(CLASS_NAME) + "HelloWorld.class");
+        ClassPathResource resource = new ClassPathResource(getPackagePath(CANONICAL_CLASS_NAME_WITHOUT_SUFFIX)
+                + getSimpleClassName(CANONICAL_CLASS_NAME_WITHOUT_SUFFIX));
         if (!resource.exists()) {
             logger.info("HelloWorld.class不存在,创建class");
-            classFile = new File(new ClassPathResource(getPackagePath(CLASS_NAME))
-                    .getURI().getPath() + resource.getPath());
+            classFile = new File(new ClassPathResource(getPackagePath(CANONICAL_CLASS_NAME_WITHOUT_SUFFIX))
+                    .getURI().getPath() + getSimpleClassName(CANONICAL_CLASS_NAME_WITHOUT_SUFFIX));
             classFile.createNewFile();
         } else {
             logger.info("HelloWorld.class存在,覆盖class");
@@ -71,20 +73,25 @@ public class ASMUsageDemo {
         ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 
         //申明一个jdk1.8的名为HelloWorld的类
-        writer.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, CLASS_NAME.replace('.', '/'), null,
+        writer.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, CANONICAL_CLASS_NAME_WITHOUT_SUFFIX.
+                        replace('.', '/'), null,
                 "java/lang/Object", null);
 
         //初始化一个无参构造器
         MethodVisitor noArgsConstructor = writer.visitMethod(Opcodes.ACC_PUBLIC, "<init>", "()V",
                 null, null);
         //对本地变量执行一个操作,https://docs.oracle.com/javase/specs/jvms/se9/html/jvms-6.html,两个参数是操作指令和操作数
-        noArgsConstructor.visitVarInsn(Opcodes.ALOAD, 0);
-        //执行父类的无参构造器
+        noArgsConstructor.visitVarInsn(Opcodes.ALOAD, 0);//本地变量表中第0个是什么？是无参构造器吗?
+        //执行父类的无参构造器,执行之前必须使构造器成为当前方法，所以有上面的调用，构造器必须调用super(),或者this()来简洁调用super
+        //来初始化父类,所以这两个操作是必须的
+        //INVOKESPECIAL是调用构造器<init>,私有方法和父类方法的字节码指令
         noArgsConstructor.visitMethodInsn(Opcodes.INVOKESPECIAL, "java/lang/Object",
                 "<init>", "()V", false);
-        //构造器没有返回值
+        //return from a void method
         noArgsConstructor.visitInsn(Opcodes.RETURN);
+        //操作数栈的深度和本店变量表必须大于一
         noArgsConstructor.visitMaxs(1, 1);
+        //结束构造器的定义
         noArgsConstructor.visitEnd();
 
         return writer;
@@ -113,5 +120,10 @@ public class ASMUsageDemo {
         if (StringUtils.isEmpty(canonicalClassName)) return "/";
         return canonicalClassName.substring(0, canonicalClassName.lastIndexOf('.') + 1)
                 .replace('.', '/');
+    }
+
+    private String getSimpleClassName(String canonicalClassName) {
+        if (StringUtils.isEmpty(canonicalClassName)) return null;
+        return canonicalClassName.substring(canonicalClassName.lastIndexOf('.') + 1) + ".class";
     }
 }
