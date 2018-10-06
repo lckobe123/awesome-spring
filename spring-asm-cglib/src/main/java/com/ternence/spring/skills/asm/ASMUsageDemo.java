@@ -5,7 +5,13 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.StringUtils;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -15,12 +21,14 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class ASMUsageDemo {
     private final static Logger logger = LoggerFactory.getLogger(ASMUsageDemo.class);
+    private static final String CLASS_NAME = "com.ternence.spring.skills.asm.HelloWorld";
 
-    public static void main(String[] args) throws IllegalAccessException, InstantiationException, InvocationTargetException {
+    public static void main(String[] args) throws IllegalAccessException, InstantiationException,
+            InvocationTargetException, IOException {
         ASMUsageDemo demo = new ASMUsageDemo();
         byte[] classAsData = demo.createHelloWorldMethod();
-        String className = "com.ternence.spring.skills.asm.HelloWorld";
-        Class objectClass = new MyClassLoader().defineClassForName(className, classAsData);
+        demo.writeClassToFile(classAsData);
+        Class objectClass = new MyClassLoader().defineClassForName(CLASS_NAME, classAsData);
         logger.info("start invoke method");
         objectClass.getMethods()[0].invoke(objectClass.newInstance());
         logger.info("end invoke method");
@@ -37,6 +45,24 @@ public class ASMUsageDemo {
         }
     }
 
+    private void writeClassToFile(byte[] classAsData) throws IOException {
+        File classFile;
+        ClassPathResource resource = new ClassPathResource(getPackagePath(CLASS_NAME) + "HelloWorld.class");
+        if (!resource.exists()) {
+            logger.info("HelloWorld.class不存在,创建class");
+            classFile = new File(new ClassPathResource(getPackagePath(CLASS_NAME))
+                    .getURI().getPath() + resource.getPath());
+            classFile.createNewFile();
+        } else {
+            logger.info("HelloWorld.class存在,覆盖class");
+            classFile = resource.getFile();
+        }
+        OutputStream outputStream = new FileOutputStream(classFile, false);
+        outputStream.write(classAsData);
+        outputStream.flush();
+        outputStream.close();
+    }
+
     /**
      * 使用ASM来写一个hello world示例
      */
@@ -45,7 +71,7 @@ public class ASMUsageDemo {
         ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
 
         //申明一个jdk1.8的名为HelloWorld的类
-        writer.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, "com/ternence/spring/skills/asm/HelloWorld", null,
+        writer.visit(Opcodes.V1_8, Opcodes.ACC_PUBLIC, CLASS_NAME.replace('.', '/'), null,
                 "java/lang/Object", null);
 
         //初始化一个无参构造器
@@ -73,7 +99,7 @@ public class ASMUsageDemo {
         //先获取一个java.io.PrintStream对象
         helloWorldMethod.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
         // 将int, float或String型常量值从常量池中推送至栈顶  (此处将message字符串从常量池中推送至栈顶[输出的内容])
-        helloWorldMethod.visitLdcInsn("hello world asm !");
+        helloWorldMethod.visitLdcInsn("Hello world ASM !");
         // 执行println方法（执行的是参数为字符串，无返回值的println函数）
         helloWorldMethod.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println",
                 "(Ljava/lang/String;)V", false);
@@ -81,7 +107,11 @@ public class ASMUsageDemo {
         helloWorldMethod.visitMaxs(1, 1);
         helloWorldMethod.visitEnd();
         return helloWorldClassWriter.toByteArray();
+    }
 
-
+    private String getPackagePath(String canonicalClassName) {
+        if (StringUtils.isEmpty(canonicalClassName)) return "/";
+        return canonicalClassName.substring(0, canonicalClassName.lastIndexOf('.') + 1)
+                .replace('.', '/');
     }
 }
