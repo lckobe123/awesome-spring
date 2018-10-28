@@ -12,7 +12,8 @@
     <version>1.0-SNAPSHOT</version>
 
     <description>以前面试很多人问我是怎么解决遇到的问题的，获取知识的，我会说从书上呀，github上呀，各种，
-    但是现在我会说，我一言不合就去看框架源码怎么写的！解决问题速度最快</description>
+        但是现在我会说，我一言不合就去看框架源码怎么写的！解决问题速度最快
+    </description>
     <dependencies>
         <!--分布式定时作业脚本-->
         <dependency>
@@ -33,6 +34,12 @@
             <groupId>com.dangdang</groupId>
             <artifactId>elastic-job-lite-spring</artifactId>
             <version>2.1.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.20</version>
         </dependency>
 
         <!--zookeeper的版本必须和服务器的版本一致，客户端的版本只需要可以兼容使用就可以了-->
@@ -130,5 +137,44 @@
             <artifactId>junit</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.ternence.spring.skills.job.JobsApplicationStarter</mainClass>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                        </manifest>
+                    </archive>
+                    <classesDirectory>
+                    </classesDirectory>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution><!-- 配置执行器 -->
+                        <id>make-assembly</id>
+                        <phase>package</phase><!-- 绑定到package生命周期阶段上 -->
+                        <goals>
+                            <goal>single</goal><!-- 只运行一次 -->
+                        </goals>
+                        <configuration>
+                            <finalName>${project.name}</finalName>
+                            <descriptor>src/main/assembly/assembly.xml</descriptor><!--配置描述文件路径-->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

@@ -21,11 +21,5 @@ public class JobsApplicationStarter {
                 new ClassPathXmlApplicationContext("spring-job.xml");
 
         context.start();
-
-        try {
-            JobsApplicationStarter.class.wait();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }
