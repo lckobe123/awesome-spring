@@ -6,6 +6,11 @@ import java.util.stream.Stream;
 /**
  * @author TAOJIANGHANG
  * @since 2018/11/9 11:05
+ * <p>
+ * 遗憾的是，在绝大多数Java代码里，我们常常忘记了判断空引用，如何优雅的解决这个问题？
+ * Optional是对可以为空的对象进行的封装, 并不会减少代码量，甚至比原来的代码还多。但好处在于，
+ * 你绝对不会忘记判空，因为这里我们得到的不是一个你期望得到的对象，而是Optional，他的get方法可能返回null
+ * Optional给了我们一个有意义的null,可交互的null
  */
 public class OptionalTest {
 
