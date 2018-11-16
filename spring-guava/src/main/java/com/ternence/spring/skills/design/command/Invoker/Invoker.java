@@ -17,6 +17,6 @@ public interface Invoker {
 
     void execute(Object... someParameters);
 
-    void isExecutingCommand(Command command);
+    void setExecutingCommand(Command command);
 
 }

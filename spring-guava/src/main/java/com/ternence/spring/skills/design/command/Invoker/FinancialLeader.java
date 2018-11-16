@@ -15,7 +15,7 @@ public class FinancialLeader implements Invoker {
     private Command command;
 
     @Override
-    public void isExecutingCommand(Command command) {
+    public void setExecutingCommand(Command command) {
         this.command = command;
     }
 
