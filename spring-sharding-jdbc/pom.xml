@@ -12,13 +12,14 @@
     <artifactId>spring-sharding-jdbc</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>spring-shareding-jdbc</name>
+    <name>spring-sharding-jdbc</name>
     <url>http://www.example.com</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <sharding-sphere.version>3.1.0</sharding-sphere.version>
     </properties>
 
     <dependencies>
@@ -29,16 +30,27 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/io.shardingsphere/sharding-jdbc -->
+        <!-- https://mvnrepository.com/artifact/io.shardingsphere/sharding-jdbc-core -->
         <dependency>
             <groupId>io.shardingsphere</groupId>
-            <artifactId>sharding-jdbc</artifactId>
-            <version>3.0.0.M1</version>
+            <artifactId>sharding-jdbc-core</artifactId>
+            <version>${sharding-sphere.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.shardingsphere</groupId>
+            <artifactId>sharding-jdbc-spring-namespace</artifactId>
+            <version>${sharding-sphere.version}</version>
+        </dependency>
+        <!--see also : https://github.com/sharding-sphere/sharding-sphere-example/blob/3.1.0/pom.xml-->
+        <!--<dependency>
+            <groupId>io.shardingsphere</groupId>
+            <artifactId>sharding-jdbc-orchestration-spring-namespace</artifactId>
+            <version>${sharding-sphere.version}</version>
+        </dependency>-->
     </dependencies>
 
     <build>
-        <finalName>spring-shareding-jdbc</finalName>
+        <finalName>${project.artifactId}</finalName>
     </build>
 </project>
